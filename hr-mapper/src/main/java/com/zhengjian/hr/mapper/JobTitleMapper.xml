@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhengjian.hr.mapper.JobTitleMapper" >
+  <resultMap id="BaseResultMap" type="com.zhengjian.hr.model.JobTitle" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="CHAR" />
+    <result column="createDate" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="enabled" property="enabled" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, level, createDate, enabled
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_jobtitle
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_jobtitle
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zhengjian.hr.model.JobTitle" >
+    insert into t_jobtitle (id, name, level, 
+      createDate, enabled)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{level,jdbcType=CHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{enabled,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhengjian.hr.model.JobTitle" >
+    insert into t_jobtitle
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="createDate != null" >
+        createDate,
+      </if>
+      <if test="enabled != null" >
+        enabled,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=CHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enabled != null" >
+        #{enabled,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhengjian.hr.model.JobTitle" >
+    update t_jobtitle
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=CHAR},
+      </if>
+      <if test="createDate != null" >
+        createDate = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enabled != null" >
+        enabled = #{enabled,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhengjian.hr.model.JobTitle" >
+    update t_jobtitle
+    set name = #{name,jdbcType=VARCHAR},
+      level = #{level,jdbcType=CHAR},
+      createDate = #{createDate,jdbcType=TIMESTAMP},
+      enabled = #{enabled,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <delete id="deleteByPrimaryKeys">
+    delete from t_jobtitle where id in
+    <foreach collection="ids" item="id" separator="," open="(" close=")">
+      #{id}
+    </foreach>
+  </delete>
+
+  <select id="getListAll" resultMap="BaseResultMap">
+    select * from t_jobtitle;
+  </select>
+</mapper>

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhengjian.hr.mapper.MenuMapper" >
+  <resultMap id="BaseResultMap" type="com.zhengjian.hr.model.Menu" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="component" property="component" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="iconCls" property="iconCls" jdbcType="VARCHAR" />
+    <result column="parentId" property="parentId" jdbcType="INTEGER" />
+    <result column="enabled" property="enabled" jdbcType="BIT" />
+    <association property="meta" javaType="com.zhengjian.hr.model.Meta">
+      <result column="keepAlive" property="keepAlive" jdbcType="BIT" />
+      <result column="requireAuth" property="requireAuth" jdbcType="BIT" />
+    </association>
+  </resultMap>
+
+  <resultMap id="MenuWithChildren" type="com.zhengjian.hr.model.Menu" extends="BaseResultMap">
+    <collection property="children" ofType="com.zhengjian.hr.model.Menu">
+      <id column="id2" property="id" jdbcType="INTEGER" />
+      <result column="url2" property="url" jdbcType="VARCHAR" />
+      <result column="path2" property="path" jdbcType="VARCHAR" />
+      <result column="component2" property="component" jdbcType="VARCHAR" />
+      <result column="name2" property="name" jdbcType="VARCHAR" />
+      <result column="iconCls2" property="iconCls" jdbcType="VARCHAR" />
+      <result column="parentId2" property="parentId" jdbcType="INTEGER" />
+      <result column="enabled2" property="enabled" jdbcType="BIT" />
+      <association property="meta" javaType="com.zhengjian.hr.model.Meta">
+        <result column="keepAlive2" property="keepAlive" jdbcType="BIT" />
+        <result column="requireAuth2" property="requireAuth" jdbcType="BIT" />
+      </association>
+    </collection>
+  </resultMap>
+
+  <resultMap id="MenuWithChildren2" type="com.zhengjian.hr.model.Menu" extends="BaseResultMap">
+    <collection property="children" ofType="com.zhengjian.hr.model.Menu">
+      <id column="id2" property="id"/>
+      <result column="name2" property="name"/>
+      <collection property="children" ofType="com.zhengjian.hr.model.Menu">
+        <id column="id3" property="id"/>
+        <result column="name3" property="name"/>
+      </collection>
+    </collection>
+  </resultMap>
+
+  <resultMap id="MenuWithRoles" type="com.zhengjian.hr.model.Menu" extends="BaseResultMap">
+    <collection property="roles" ofType="com.zhengjian.hr.model.Role">
+      <id column="rid" property="id"/>
+      <result column="rname" property="name"/>
+      <result column="rnameZh" property="nameZh"/>
+    </collection>
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, url, path, component, name, iconCls, keepAlive, requireAuth, parentId, enabled
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_menu
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_menu
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zhengjian.hr.model.Menu" >
+    insert into t_menu (id, url, path, 
+      component, name, iconCls, 
+      keepAlive, requireAuth, parentId, 
+      enabled)
+    values (#{id,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, 
+      #{component,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{iconCls,jdbcType=VARCHAR}, 
+      #{keepAlive,jdbcType=BIT}, #{requireAuth,jdbcType=BIT}, #{parentId,jdbcType=INTEGER}, 
+      #{enabled,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhengjian.hr.model.Menu" >
+    insert into t_menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="path != null" >
+        path,
+      </if>
+      <if test="component != null" >
+        component,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="iconCls != null" >
+        iconCls,
+      </if>
+      <if test="keepAlive != null" >
+        keepAlive,
+      </if>
+      <if test="requireAuth != null" >
+        requireAuth,
+      </if>
+      <if test="parentId != null" >
+        parentId,
+      </if>
+      <if test="enabled != null" >
+        enabled,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="component != null" >
+        #{component,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="iconCls != null" >
+        #{iconCls,jdbcType=VARCHAR},
+      </if>
+      <if test="keepAlive != null" >
+        #{keepAlive,jdbcType=BIT},
+      </if>
+      <if test="requireAuth != null" >
+        #{requireAuth,jdbcType=BIT},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="enabled != null" >
+        #{enabled,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhengjian.hr.model.Menu" >
+    update t_menu
+    <set >
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null" >
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="component != null" >
+        component = #{component,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="iconCls != null" >
+        iconCls = #{iconCls,jdbcType=VARCHAR},
+      </if>
+      <if test="keepAlive != null" >
+        keepAlive = #{keepAlive,jdbcType=BIT},
+      </if>
+      <if test="requireAuth != null" >
+        requireAuth = #{requireAuth,jdbcType=BIT},
+      </if>
+      <if test="parentId != null" >
+        parentId = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="enabled != null" >
+        enabled = #{enabled,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhengjian.hr.model.Menu" >
+    update t_menu
+    set url = #{url,jdbcType=VARCHAR},
+      path = #{path,jdbcType=VARCHAR},
+      component = #{component,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      iconCls = #{iconCls,jdbcType=VARCHAR},
+      keepAlive = #{keepAlive,jdbcType=BIT},
+      requireAuth = #{requireAuth,jdbcType=BIT},
+      parentId = #{parentId,jdbcType=INTEGER},
+      enabled = #{enabled,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getListByUserId" resultMap="MenuWithChildren">
+    SELECT DISTINCT
+      m1.*,
+      m2.`id` AS id2,
+      m2.`component` AS component2,
+      m2.`enabled` AS enabled2,
+      m2.`iconCls` AS iconCls2,
+      m2.`keepAlive` AS keepAlive2,
+      m2.`name` AS name2,
+      m2.`parentId` AS parentId2,
+      m2.`requireAuth` AS requireAuth2,
+      m2.`path` AS path2
+    FROM
+        t_menu m1,
+        t_menu m2,
+        t_user_role ur,
+        t_menu_role mr
+    WHERE
+        m1.`id` = m2.`parentId`
+    AND ur.`uid` = #{userId}
+    AND ur.`rid` = mr.`rid`
+    AND mr.`mid` = m2.`id`
+    AND m2.`enabled` = TRUE
+    ORDER BY
+        m1.`id`,
+        m2.`id`
+  </select>
+
+  <select id="getListAllWithRoles" resultMap="MenuWithRoles">
+    SELECT
+        m.*,
+        r.`id` AS rid,
+        r.`name` AS rname,
+        r.`nameZh` AS rnameZh
+    FROM
+        t_menu m,
+        t_menu_role mr,
+        t_role r
+    WHERE
+        m.`id` = mr.`mid`
+    AND mr.`rid` = r.`id`
+    ORDER BY
+        m.`id`
+  </select>
+
+  <select id="getListAllWithChildren" resultMap="MenuWithChildren2">
+    SELECT
+        m1.`id`,
+        m1.`name`,
+        m2.`id` AS id2,
+        m2.`name` AS name2,
+        m3.`id` AS id3,
+        m3.`name` AS name3
+    FROM
+        t_menu m1,
+        t_menu m2,
+        t_menu m3
+    WHERE
+        m1.`id` = m2.`parentId`
+    AND m2.`id` = m3.`parentId`
+    AND m3.`enabled` = TRUE
+    ORDER BY
+        m1.`id`,
+        m2.`id`,
+        m3.`id`
+  </select>
+</mapper>

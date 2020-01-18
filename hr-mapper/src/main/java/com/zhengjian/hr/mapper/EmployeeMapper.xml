@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhengjian.hr.mapper.EmployeeMapper" >
+  <resultMap id="BaseResultMap" type="com.zhengjian.hr.model.Employee" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="CHAR" />
+    <result column="birthday" property="birthday" jdbcType="DATE" />
+    <result column="idCard" property="idCard" jdbcType="CHAR" />
+    <result column="wedlock" property="wedlock" jdbcType="CHAR" />
+    <result column="nationId" property="nationId" jdbcType="INTEGER" />
+    <result column="nativePlace" property="nativePlace" jdbcType="VARCHAR" />
+    <result column="politicsStatusId" property="politicsStatusId" jdbcType="INTEGER" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="departmentId" property="departmentId" jdbcType="INTEGER" />
+    <result column="jobTitleId" property="jobTitleId" jdbcType="INTEGER" />
+    <result column="positionId" property="positionId" jdbcType="INTEGER" />
+    <result column="engageForm" property="engageForm" jdbcType="VARCHAR" />
+    <result column="tiptopDegree" property="tiptopDegree" jdbcType="CHAR" />
+    <result column="specialty" property="specialty" jdbcType="VARCHAR" />
+    <result column="school" property="school" jdbcType="VARCHAR" />
+    <result column="beginDate" property="beginDate" jdbcType="DATE" />
+    <result column="workState" property="workState" jdbcType="CHAR" />
+    <result column="workId" property="workId" jdbcType="CHAR" />
+    <result column="contractTerm" property="contractTerm" jdbcType="DOUBLE" />
+    <result column="conversionTime" property="conversionTime" jdbcType="DATE" />
+    <result column="notWorkDate" property="notWorkDate" jdbcType="DATE" />
+    <result column="beginContract" property="beginContract" jdbcType="DATE" />
+    <result column="endContract" property="endContract" jdbcType="DATE" />
+    <result column="workAge" property="workAge" jdbcType="INTEGER" />
+  </resultMap>
+
+  <resultMap id="EmployeeWithObj" type="com.zhengjian.hr.model.Employee" extends="BaseResultMap">
+    <association property="nation" javaType="com.zhengjian.hr.model.Nation">
+      <id column="nid" property="id"/>
+      <result column="nname" property="name"/>
+    </association>
+    <association property="politicsStatus" javaType="com.zhengjian.hr.model.PoliticsStatus">
+      <id column="pid" property="id"/>
+      <result column="pname" property="name"/>
+    </association>
+    <association property="department" javaType="com.zhengjian.hr.model.Department">
+      <id column="did" property="id"/>
+      <result column="dname" property="name"/>
+    </association>
+    <association property="jobTitle" javaType="com.zhengjian.hr.model.JobTitle">
+      <id column="jid" property="id"/>
+      <result column="jname" property="name"/>
+    </association>
+    <association property="position" javaType="com.zhengjian.hr.model.Position">
+      <id column="posid" property="id"/>
+      <result column="posname" property="name"/>
+    </association>
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, name, gender, birthday, idCard, wedlock, nationId, nativePlace, politicsStatusId, 
+    email, phone, address, departmentId, jobTitleId, positionId, engageForm, tiptopDegree, 
+    specialty, school, beginDate, workState, workId, contractTerm, conversionTime, notWorkDate, 
+    beginContract, endContract, workAge
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_employee
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_employee
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zhengjian.hr.model.Employee" >
+    insert into t_employee (id, name, gender, 
+      birthday, idCard, wedlock, nationId, 
+      nativePlace, politicsStatusId, email, 
+      phone, address, departmentId, 
+      jobTitleId, positionId, engageForm, 
+      tiptopDegree, specialty, school, 
+      beginDate, workState, workId, 
+      contractTerm, conversionTime, notWorkDate, 
+      beginContract, endContract, workAge
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{gender,jdbcType=CHAR}, 
+      #{birthday,jdbcType=DATE}, #{idCard,jdbcType=CHAR}, #{wedlock,jdbcType=CHAR}, #{nationId,jdbcType=INTEGER}, 
+      #{nativePlace,jdbcType=VARCHAR}, #{politicsStatusId,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, 
+      #{jobTitleId,jdbcType=INTEGER}, #{positionId,jdbcType=INTEGER}, #{engageForm,jdbcType=VARCHAR}, 
+      #{tiptopDegree,jdbcType=CHAR}, #{specialty,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, 
+      #{beginDate,jdbcType=DATE}, #{workState,jdbcType=CHAR}, #{workId,jdbcType=CHAR}, 
+      #{contractTerm,jdbcType=DOUBLE}, #{conversionTime,jdbcType=DATE}, #{notWorkDate,jdbcType=DATE}, 
+      #{beginContract,jdbcType=DATE}, #{endContract,jdbcType=DATE}, #{workAge,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhengjian.hr.model.Employee" >
+    insert into t_employee
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="idCard != null" >
+        idCard,
+      </if>
+      <if test="wedlock != null" >
+        wedlock,
+      </if>
+      <if test="nationId != null" >
+        nationId,
+      </if>
+      <if test="nativePlace != null" >
+        nativePlace,
+      </if>
+      <if test="politicsStatusId != null" >
+        politicsStatusId,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="departmentId != null" >
+        departmentId,
+      </if>
+      <if test="jobTitleId != null" >
+        jobTitleId,
+      </if>
+      <if test="positionId != null" >
+        positionId,
+      </if>
+      <if test="engageForm != null" >
+        engageForm,
+      </if>
+      <if test="tiptopDegree != null" >
+        tiptopDegree,
+      </if>
+      <if test="specialty != null" >
+        specialty,
+      </if>
+      <if test="school != null" >
+        school,
+      </if>
+      <if test="beginDate != null" >
+        beginDate,
+      </if>
+      <if test="workState != null" >
+        workState,
+      </if>
+      <if test="workId != null" >
+        workId,
+      </if>
+      <if test="contractTerm != null" >
+        contractTerm,
+      </if>
+      <if test="conversionTime != null" >
+        conversionTime,
+      </if>
+      <if test="notWorkDate != null" >
+        notWorkDate,
+      </if>
+      <if test="beginContract != null" >
+        beginContract,
+      </if>
+      <if test="endContract != null" >
+        endContract,
+      </if>
+      <if test="workAge != null" >
+        workAge,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="idCard != null" >
+        #{idCard,jdbcType=CHAR},
+      </if>
+      <if test="wedlock != null" >
+        #{wedlock,jdbcType=CHAR},
+      </if>
+      <if test="nationId != null" >
+        #{nationId,jdbcType=INTEGER},
+      </if>
+      <if test="nativePlace != null" >
+        #{nativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="politicsStatusId != null" >
+        #{politicsStatusId,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="jobTitleId != null" >
+        #{jobTitleId,jdbcType=INTEGER},
+      </if>
+      <if test="positionId != null" >
+        #{positionId,jdbcType=INTEGER},
+      </if>
+      <if test="engageForm != null" >
+        #{engageForm,jdbcType=VARCHAR},
+      </if>
+      <if test="tiptopDegree != null" >
+        #{tiptopDegree,jdbcType=CHAR},
+      </if>
+      <if test="specialty != null" >
+        #{specialty,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="beginDate != null" >
+        #{beginDate,jdbcType=DATE},
+      </if>
+      <if test="workState != null" >
+        #{workState,jdbcType=CHAR},
+      </if>
+      <if test="workId != null" >
+        #{workId,jdbcType=CHAR},
+      </if>
+      <if test="contractTerm != null" >
+        #{contractTerm,jdbcType=DOUBLE},
+      </if>
+      <if test="conversionTime != null" >
+        #{conversionTime,jdbcType=DATE},
+      </if>
+      <if test="notWorkDate != null" >
+        #{notWorkDate,jdbcType=DATE},
+      </if>
+      <if test="beginContract != null" >
+        #{beginContract,jdbcType=DATE},
+      </if>
+      <if test="endContract != null" >
+        #{endContract,jdbcType=DATE},
+      </if>
+      <if test="workAge != null" >
+        #{workAge,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhengjian.hr.model.Employee" >
+    update t_employee
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="idCard != null" >
+        idCard = #{idCard,jdbcType=CHAR},
+      </if>
+      <if test="wedlock != null" >
+        wedlock = #{wedlock,jdbcType=CHAR},
+      </if>
+      <if test="nationId != null" >
+        nationId = #{nationId,jdbcType=INTEGER},
+      </if>
+      <if test="nativePlace != null" >
+        nativePlace = #{nativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="politicsStatusId != null" >
+        politicsStatusId = #{politicsStatusId,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        departmentId = #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="jobTitleId != null" >
+        jobTitleId = #{jobTitleId,jdbcType=INTEGER},
+      </if>
+      <if test="positionId != null" >
+        positionId = #{positionId,jdbcType=INTEGER},
+      </if>
+      <if test="engageForm != null" >
+        engageForm = #{engageForm,jdbcType=VARCHAR},
+      </if>
+      <if test="tiptopDegree != null" >
+        tiptopDegree = #{tiptopDegree,jdbcType=CHAR},
+      </if>
+      <if test="specialty != null" >
+        specialty = #{specialty,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        school = #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="beginDate != null" >
+        beginDate = #{beginDate,jdbcType=DATE},
+      </if>
+      <if test="workState != null" >
+        workState = #{workState,jdbcType=CHAR},
+      </if>
+      <if test="workId != null" >
+        workId = #{workId,jdbcType=CHAR},
+      </if>
+      <if test="contractTerm != null" >
+        contractTerm = #{contractTerm,jdbcType=DOUBLE},
+      </if>
+      <if test="conversionTime != null" >
+        conversionTime = #{conversionTime,jdbcType=DATE},
+      </if>
+      <if test="notWorkDate != null" >
+        notWorkDate = #{notWorkDate,jdbcType=DATE},
+      </if>
+      <if test="beginContract != null" >
+        beginContract = #{beginContract,jdbcType=DATE},
+      </if>
+      <if test="endContract != null" >
+        endContract = #{endContract,jdbcType=DATE},
+      </if>
+      <if test="workAge != null" >
+        workAge = #{workAge,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhengjian.hr.model.Employee" >
+    update t_employee
+    set name = #{name,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=CHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      idCard = #{idCard,jdbcType=CHAR},
+      wedlock = #{wedlock,jdbcType=CHAR},
+      nationId = #{nationId,jdbcType=INTEGER},
+      nativePlace = #{nativePlace,jdbcType=VARCHAR},
+      politicsStatusId = #{politicsStatusId,jdbcType=INTEGER},
+      email = #{email,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      departmentId = #{departmentId,jdbcType=INTEGER},
+      jobTitleId = #{jobTitleId,jdbcType=INTEGER},
+      positionId = #{positionId,jdbcType=INTEGER},
+      engageForm = #{engageForm,jdbcType=VARCHAR},
+      tiptopDegree = #{tiptopDegree,jdbcType=CHAR},
+      specialty = #{specialty,jdbcType=VARCHAR},
+      school = #{school,jdbcType=VARCHAR},
+      beginDate = #{beginDate,jdbcType=DATE},
+      workState = #{workState,jdbcType=CHAR},
+      workId = #{workId,jdbcType=CHAR},
+      contractTerm = #{contractTerm,jdbcType=DOUBLE},
+      conversionTime = #{conversionTime,jdbcType=DATE},
+      notWorkDate = #{notWorkDate,jdbcType=DATE},
+      beginContract = #{beginContract,jdbcType=DATE},
+      endContract = #{endContract,jdbcType=DATE},
+      workAge = #{workAge,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <delete id="deleteByPrimaryKeys">
+    delete from t_employee where id in
+    <foreach collection="ids" item="id" separator="," open="(" close=")">
+      #{id}
+    </foreach>
+  </delete>
+
+  <select id="getListAll" resultMap="BaseResultMap">
+    select * from t_employee;
+  </select>
+
+  <select id="getPage" resultMap="EmployeeWithObj">
+    SELECT
+        e.*,
+        p.`id` AS pid,
+        p.`name` AS pname,
+        n.`id` AS nid,
+        n.`name` AS nname,
+        d.`id` AS did,
+        d.`name` AS dname,
+        j.`id` AS jid,
+        j.`name` AS jname,
+        pos.`id` AS posid,
+        pos.`name` AS posname
+    FROM
+        t_employee e,
+        t_nation n,
+        t_politicsstatus p,
+        t_department d,
+        t_jobtitle j,
+        t_position pos
+    WHERE
+        e.`nationId` = n.`id`
+    AND e.`politicsStatusId` = p.`id`
+    AND e.`departmentId` = d.`id`
+    AND e.`jobTitleId` = j.`id`
+    AND e.`positionId` = pos.`id`
+
+    <if test="employee != null">
+      <if test="employee.name != null and employee.name != ''" >
+        and e.name like concat('%', #{employee.name,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="employee.gender != null" >
+        and e.gender = #{employee.gender,jdbcType=CHAR}
+      </if>
+      <if test="employee.birthday != null" >
+        and e.birthday = #{employee.birthday,jdbcType=DATE}
+      </if>
+      <if test="employee.idCard != null" >
+        and e.idCard = #{employee.idCard,jdbcType=CHAR}
+      </if>
+      <if test="employee.wedlock != null" >
+        and e.wedlock = #{employee.wedlock,jdbcType=CHAR}
+      </if>
+      <if test="employee.nationId != null" >
+        and e.nationId = #{employee.nationId,jdbcType=INTEGER}
+      </if>
+      <if test="employee.nativePlace != null" >
+        and e.nativePlace = #{employee.nativePlace,jdbcType=VARCHAR}
+      </if>
+      <if test="employee.politicsStatusId != null" >
+        and e.politicsStatusId = #{employee.politicsStatusId,jdbcType=INTEGER}
+      </if>
+      <if test="employee.email != null" >
+        and e.email = #{employee.email,jdbcType=VARCHAR}
+      </if>
+      <if test="employee.phone != null" >
+        and e.phone = #{employee.phone,jdbcType=VARCHAR}
+      </if>
+      <if test="employee.address != null" >
+        and e.address = #{employee.address,jdbcType=VARCHAR}
+      </if>
+      <if test="employee.departmentId != null" >
+        and e.departmentId = #{employee.departmentId,jdbcType=INTEGER}
+      </if>
+      <if test="employee.jobTitleId != null" >
+        and e.jobTitleId = #{employee.jobTitleId,jdbcType=INTEGER}
+      </if>
+      <if test="employee.positionId != null" >
+        and e.positionId = #{employee.positionId,jdbcType=INTEGER}
+      </if>
+      <if test="employee.engageForm != null" >
+        and e.engageForm = #{employee.engageForm,jdbcType=VARCHAR}
+      </if>
+      <if test="employee.tiptopDegree != null" >
+        and e.tiptopDegree = #{employee.tiptopDegree,jdbcType=CHAR}
+      </if>
+      <if test="employee.specialty != null" >
+        and e.specialty = #{employee.specialty,jdbcType=VARCHAR}
+      </if>
+      <if test="employee.school != null" >
+        and e.school = #{employee.school,jdbcType=VARCHAR}
+      </if>
+      <if test="employee.beginDate != null" >
+        and e.beginDate = #{employee.beginDate,jdbcType=DATE}
+      </if>
+      <if test="employee.workState != null" >
+        and e.workState = #{employee.workState,jdbcType=CHAR}
+      </if>
+      <if test="employee.workId != null" >
+        and e.workId = #{employee.workId,jdbcType=CHAR}
+      </if>
+      <if test="employee.contractTerm != null" >
+        and e.contractTerm = #{employee.contractTerm,jdbcType=DOUBLE}
+      </if>
+      <if test="employee.conversionTime != null" >
+        and e.conversionTime = #{employee.conversionTime,jdbcType=DATE}
+      </if>
+      <if test="employee.notWorkDate != null" >
+        and e.notWorkDate = #{employee.notWorkDate,jdbcType=DATE}
+      </if>
+      <if test="employee.beginContract != null" >
+        and e.beginContract = #{employee.beginContract,jdbcType=DATE}
+      </if>
+      <if test="employee.endContract != null" >
+        and e.endContract = #{employee.endContract,jdbcType=DATE}
+      </if>
+      <if test="employee.workAge != null" >
+        and e.workAge = #{employee.workAge,jdbcType=INTEGER}
+      </if>
+    </if>
+
+    <if test="beginDateScope != null">
+      and e.beginDate between #{beginDateScope[0]} and #{beginDateScope[1]}
+    </if>
+
+    order by e.id
+
+    <if test="offset != null and rows != null">
+      limit #{offset}, #{rows}
+    </if>
+  </select>
+
+  <select id="count" resultType="java.lang.Long">
+    select count(*) from t_employee e
+    <where>
+      <if test="employee != null">
+        <if test="employee.name != null and employee.name != ''" >
+          and e.name like concat('%', #{employee.name,jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="employee.gender != null" >
+          and e.gender = #{employee.gender,jdbcType=CHAR}
+        </if>
+        <if test="employee.birthday != null" >
+          and e.birthday = #{employee.birthday,jdbcType=DATE}
+        </if>
+        <if test="employee.idCard != null" >
+          and e.idCard = #{employee.idCard,jdbcType=CHAR}
+        </if>
+        <if test="employee.wedlock != null" >
+          and e.wedlock = #{employee.wedlock,jdbcType=CHAR}
+        </if>
+        <if test="employee.nationId != null" >
+          and e.nationId = #{employee.nationId,jdbcType=INTEGER}
+        </if>
+        <if test="employee.nativePlace != null" >
+          and e.nativePlace = #{employee.nativePlace,jdbcType=VARCHAR}
+        </if>
+        <if test="employee.politicsStatusId != null" >
+          and e.politicsStatusId = #{employee.politicsStatusId,jdbcType=INTEGER}
+        </if>
+        <if test="employee.email != null" >
+          and e.email = #{employee.email,jdbcType=VARCHAR}
+        </if>
+        <if test="employee.phone != null" >
+          and e.phone = #{employee.phone,jdbcType=VARCHAR}
+        </if>
+        <if test="employee.address != null" >
+          and e.address = #{employee.address,jdbcType=VARCHAR}
+        </if>
+        <if test="employee.departmentId != null" >
+          and e.departmentId = #{employee.departmentId,jdbcType=INTEGER}
+        </if>
+        <if test="employee.jobTitleId != null" >
+          and e.jobTitleId = #{employee.jobTitleId,jdbcType=INTEGER}
+        </if>
+        <if test="employee.positionId != null" >
+          and e.positionId = #{employee.positionId,jdbcType=INTEGER}
+        </if>
+        <if test="employee.engageForm != null" >
+          and e.engageForm = #{employee.engageForm,jdbcType=VARCHAR}
+        </if>
+        <if test="employee.tiptopDegree != null" >
+          and e.tiptopDegree = #{employee.tiptopDegree,jdbcType=CHAR}
+        </if>
+        <if test="employee.specialty != null" >
+          and e.specialty = #{employee.specialty,jdbcType=VARCHAR}
+        </if>
+        <if test="employee.school != null" >
+          and e.school = #{employee.school,jdbcType=VARCHAR}
+        </if>
+        <if test="employee.beginDate != null" >
+          and e.beginDate = #{employee.beginDate,jdbcType=DATE}
+        </if>
+        <if test="employee.workState != null" >
+          and e.workState = #{employee.workState,jdbcType=CHAR}
+        </if>
+        <if test="employee.workId != null" >
+          and e.workId = #{employee.workId,jdbcType=CHAR}
+        </if>
+        <if test="employee.contractTerm != null" >
+          and e.contractTerm = #{employee.contractTerm,jdbcType=DOUBLE}
+        </if>
+        <if test="employee.conversionTime != null" >
+          and e.conversionTime = #{employee.conversionTime,jdbcType=DATE}
+        </if>
+        <if test="employee.notWorkDate != null" >
+          and e.notWorkDate = #{employee.notWorkDate,jdbcType=DATE}
+        </if>
+        <if test="employee.beginContract != null" >
+          and e.beginContract = #{employee.beginContract,jdbcType=DATE}
+        </if>
+        <if test="employee.endContract != null" >
+          and e.endContract = #{employee.endContract,jdbcType=DATE}
+        </if>
+        <if test="employee.workAge != null" >
+          and e.workAge = #{employee.workAge,jdbcType=INTEGER}
+        </if>
+      </if>
+
+      <if test="beginDateScope != null">
+        and e.beginDate between #{beginDateScope[0]} and #{beginDateScope[1]}
+      </if>
+    </where>
+  </select>
+
+  <select id="getMaxWorkId" resultType="java.lang.Integer">
+    select max(workId) from t_employee
+  </select>
+
+  <insert id="inserts">
+    insert into t_employee (id, name, gender,
+    birthday, idCard, wedlock, nationId,
+    nativePlace, politicsStatusId, email,
+    phone, address, departmentId,
+    jobTitleId, positionId, engageForm,
+    tiptopDegree, specialty, school,
+    beginDate, workState, workId,
+    contractTerm, conversionTime, notWorkDate,
+    beginContract, endContract, workAge
+    )
+    values
+    <foreach collection="employeeList" separator="," item="employee">
+      (#{employee.id,jdbcType=INTEGER}, #{employee.name,jdbcType=VARCHAR}, #{employee.gender,jdbcType=CHAR},
+      #{employee.birthday,jdbcType=DATE}, #{employee.idCard,jdbcType=CHAR}, #{employee.wedlock,jdbcType=CHAR}, #{employee.nationId,jdbcType=INTEGER},
+      #{employee.nativePlace,jdbcType=VARCHAR}, #{employee.politicsStatusId,jdbcType=INTEGER}, #{employee.email,jdbcType=VARCHAR},
+      #{employee.phone,jdbcType=VARCHAR}, #{employee.address,jdbcType=VARCHAR}, #{employee.departmentId,jdbcType=INTEGER},
+      #{employee.jobTitleId,jdbcType=INTEGER}, #{employee.positionId,jdbcType=INTEGER}, #{employee.engageForm,jdbcType=VARCHAR},
+      #{employee.tiptopDegree,jdbcType=CHAR}, #{employee.specialty,jdbcType=VARCHAR}, #{employee.school,jdbcType=VARCHAR},
+      #{employee.beginDate,jdbcType=DATE}, #{employee.workState,jdbcType=CHAR}, #{employee.workId,jdbcType=CHAR},
+      #{employee.contractTerm,jdbcType=DOUBLE}, #{employee.conversionTime,jdbcType=DATE}, #{employee.notWorkDate,jdbcType=DATE},
+      #{employee.beginContract,jdbcType=DATE}, #{employee.endContract,jdbcType=DATE}, #{employee.workAge,jdbcType=INTEGER}
+      )
+    </foreach>
+  </insert>
+</mapper>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhengjian.hr.mapper.DepartmentMapper" >
+  <resultMap id="BaseResultMap" type="com.zhengjian.hr.model.Department" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="parentId" property="parentId" jdbcType="INTEGER" />
+    <result column="depPath" property="depPath" jdbcType="VARCHAR" />
+    <result column="enabled" property="enabled" jdbcType="BIT" />
+    <result column="isParent" property="isParent" jdbcType="BIT" />
+  </resultMap>
+
+  <resultMap id="DepartmentWithChildren" type="com.zhengjian.hr.model.Department" extends="BaseResultMap">
+    <collection property="children" ofType="com.zhengjian.hr.model.Department"
+                select="com.zhengjian.hr.mapper.DepartmentMapper.getListWithChildrenByParentId" column="id"/>
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, name, parentId, depPath, enabled, isParent
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_department
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_department
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zhengjian.hr.model.Department" useGeneratedKeys="true"  keyProperty="id" >
+    insert into t_department (id, name, parentId, 
+      depPath, enabled, isParent)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, 
+      #{depPath,jdbcType=VARCHAR}, #{enabled,jdbcType=BIT}, #{isParent,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhengjian.hr.model.Department" useGeneratedKeys="true"  keyProperty="id" >
+    insert into t_department
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="parentId != null" >
+        parentId,
+      </if>
+      <if test="depPath != null" >
+        depPath,
+      </if>
+      <if test="enabled != null" >
+        enabled,
+      </if>
+      <if test="isParent != null" >
+        isParent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="depPath != null" >
+        #{depPath,jdbcType=VARCHAR},
+      </if>
+      <if test="enabled != null" >
+        #{enabled,jdbcType=BIT},
+      </if>
+      <if test="isParent != null" >
+        #{isParent,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhengjian.hr.model.Department" >
+    update t_department
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parentId = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="depPath != null" >
+        depPath = #{depPath,jdbcType=VARCHAR},
+      </if>
+      <if test="enabled != null" >
+        enabled = #{enabled,jdbcType=BIT},
+      </if>
+      <if test="isParent != null" >
+        isParent = #{isParent,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhengjian.hr.model.Department" >
+    update t_department
+    set name = #{name,jdbcType=VARCHAR},
+      parentId = #{parentId,jdbcType=INTEGER},
+      depPath = #{depPath,jdbcType=VARCHAR},
+      enabled = #{enabled,jdbcType=BIT},
+      isParent = #{isParent,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getListAll" resultMap="BaseResultMap">
+    select * from t_department;
+  </select>
+
+  <select id="getListWithChildrenByParentId" resultMap="DepartmentWithChildren">
+    select * from t_department where parentId = #{parentId};
+  </select>
+
+  <select id="count" parameterType="com.zhengjian.hr.model.Department" resultType="java.lang.Long">
+    select count(*) from t_department
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="name != null" >
+        and name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="parentId != null" >
+        and parentId = #{parentId,jdbcType=INTEGER}
+      </if>
+      <if test="depPath != null" >
+        and depPath = #{depPath,jdbcType=VARCHAR}
+      </if>
+      <if test="enabled != null" >
+        and enabled = #{enabled,jdbcType=BIT}
+      </if>
+      <if test="isParent != null" >
+        and isParent = #{isParent,jdbcType=BIT}
+      </if>
+    </trim>
+  </select>
+
+  <select id="add" statementType="CALLABLE">
+    call addDep(#{name,mode=IN,jdbcType=VARCHAR}, #{parentId,mode=IN,jdbcType=INTEGER}, #{enabled,mode=IN,jdbcType=BOOLEAN}, #{result,mode=OUT,jdbcType=INTEGER}, #{id,mode=OUT,jdbcType=INTEGER})
+  </select>
+
+  <select id="deleteById" statementType="CALLABLE">
+    call deleteDep(#{id,mode=IN,jdbcType=INTEGER}, #{result,mode=OUT,jdbcType=INTEGER})
+  </select>
+</mapper>
