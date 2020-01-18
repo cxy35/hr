@@ -56,7 +56,7 @@
                             <el-tag>上级部门</el-tag>
                         </td>
                         <td>
-                            {{this.addData.parentName}}
+                            {{this.departmentAdd.parentName}}
                         </td>
                     </tr>
                     <tr>
@@ -64,7 +64,7 @@
                             <el-tag>部门名称</el-tag>
                         </td>
                         <td>
-                            <el-input v-model="addData.name" placeholder="请输入部门名称"></el-input>
+                            <el-input v-model="departmentAdd.name" placeholder="请输入部门名称"></el-input>
                         </td>
                     </tr>
                 </table>
@@ -85,7 +85,7 @@
                             <el-tag>部门名称</el-tag>
                         </td>
                         <td>
-                            <el-input v-model="editData.name" placeholder="请输入部门名称"></el-input>
+                            <el-input v-model="departmentEdit.name" placeholder="请输入部门名称"></el-input>
                         </td>
                     </tr>
                 </table>
@@ -111,12 +111,12 @@
                 },
                 addDialogVisible: false,
                 editDialogVisible: false,
-                addData: {
+                departmentAdd: {
                     name: '',
                     parentId: -1,
                     parentName: ''
                 },
-                editData: {
+                departmentEdit: {
                     name: ''
                 },
                 loading: false
@@ -140,15 +140,15 @@
                     }
                 });
             },
-            initAddData() {
-                this.addData = {
+            initDepartmentAdd() {
+                this.departmentAdd = {
                     name: '',
                     parentId: -1,
                     parentName: ''
                 };
             },
-            initEditData() {
-                this.editData = {
+            initDepartmentEdit() {
+                this.departmentEdit = {
                     name: ''
                 };
             },
@@ -201,17 +201,17 @@
                 }
             },
             handleAdd(data) {
-                this.addData.parentId = data.id;
-                this.addData.parentName = data.name;
+                this.departmentAdd.parentId = data.id;
+                this.departmentAdd.parentName = data.name;
                 this.addDialogVisible = true;
             },
             handleAddConfirm() {
-                if (this.addData.name && this.addData.parentId) {
-                    this.postRequest("/system/basic/department/add", this.addData).then(resp => {
+                if (this.departmentAdd.name && this.departmentAdd.parentId) {
+                    this.postRequest("/system/basic/department/add", this.departmentAdd).then(resp => {
                         if (resp) {
                             // 只处理当前新增的数据，不初始化整个 departments
                             this.handleTreeAdd(this.departments, resp.obj);
-                            this.initAddData();
+                            this.initDepartmentAdd();
                             this.addDialogVisible = false;
                         }
                     });
@@ -220,16 +220,16 @@
                 }
             },
             handleEdit(data) {
-                Object.assign(this.editData, data);// 数据复制一份
+                Object.assign(this.departmentEdit, data);// 数据复制一份
                 this.editDialogVisible = true;
             },
             handleEditConfirm() {
-                if (this.editData.name) {
-                    this.putRequest("/system/basic/department/edit", this.editData).then(resp => {
+                if (this.departmentEdit.name) {
+                    this.putRequest("/system/basic/department/edit", this.departmentEdit).then(resp => {
                         if (resp) {
                             // 只处理当前编辑的数据，不初始化整个 departments
-                            this.handleTreeEdit(this.departments, this.editData);
-                            this.initEditData();
+                            this.handleTreeEdit(this.departments, this.departmentEdit);
+                            this.initDepartmentEdit();
                             this.editDialogVisible = false;
                         }
                     });

@@ -5,7 +5,7 @@
                     class="position-add-name"
                     placeholder="请输入职位名称"
                     prefix-icon="el-icon-plus"
-                    v-model="position.name"
+                    v-model="positionAdd.name"
                     @keydown.enter.native="handleAdd">
             </el-input>
             <el-button type="primary" icon="el-icon-plus" @click="handleAdd">新增职位</el-button>
@@ -80,7 +80,7 @@
                             <el-tag>职位名称</el-tag>
                         </td>
                         <td>
-                            <el-input v-model="position.name" placeholder="请输入职位名称"></el-input>
+                            <el-input v-model="positionEdit.name" placeholder="请输入职位名称"></el-input>
                         </td>
                     </tr>
                     <tr>
@@ -89,7 +89,7 @@
                         </td>
                         <td>
                             <el-switch
-                                    v-model="position.enabled"
+                                    v-model="positionEdit.enabled"
                                     active-text="启用"
                                     inactive-text="禁用">
                             </el-switch>
@@ -110,9 +110,12 @@
         name: "Position",
         data() {
             return {
-                position: {
+                positionAdd: {
+                    name: ''
+                },
+                positionEdit: {
                     name: '',
-                    enabled: true
+                    enabled: false
                 },
                 positions: [],
                 multipleSelection: [],
@@ -133,18 +136,23 @@
                     }
                 });
             },
-            initPosition() {
-                this.position = {
+            initPositionAdd() {
+                this.positionAdd = {
+                    name: ''
+                };
+            },
+            initPositionEdit() {
+                this.positionEdit = {
                     name: '',
-                    enabled: true
+                    enabled: false
                 };
             },
             handleAdd() {
-                if (this.position.name) {
-                    this.postRequest("/system/basic/position/add", this.position).then(resp => {
+                if (this.positionAdd.name) {
+                    this.postRequest("/system/basic/position/add", this.positionAdd).then(resp => {
                         if (resp) {
                             this.initPositions();
-                            this.initPosition();
+                            this.initPositionAdd();
                         }
                     });
                 } else {
@@ -152,16 +160,15 @@
                 }
             },
             handleEdit(index, data) {
-                this.initPosition();
-                Object.assign(this.position, data);// 数据复制一份
+                Object.assign(this.positionEdit, data);// 数据复制一份
                 this.dialogVisible = true;
             },
             handleEditConfirm() {
-                if (this.position.name) {
-                    this.putRequest("/system/basic/position/edit", this.position).then(resp => {
+                if (this.positionEdit.name) {
+                    this.putRequest("/system/basic/position/edit", this.positionEdit).then(resp => {
                         if (resp) {
                             this.initPositions();
-                            this.initPosition();
+                            this.initPositionEdit();
                             this.dialogVisible = false;
                         }
                     });
@@ -178,7 +185,6 @@
                     this.deleteRequest("/system/basic/position/deleteById/" + data.id).then(resp => {
                         if (resp) {
                             this.initPositions();
-                            this.initPosition();
                         }
                     });
                 }).catch(() => {
@@ -204,7 +210,6 @@
                     this.deleteRequest("/system/basic/position/deleteByIds?" + ids).then(resp => {
                         if (resp) {
                             this.initPositions();
-                            this.initPosition();
                         }
                     });
                 }).catch(() => {

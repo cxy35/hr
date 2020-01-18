@@ -5,10 +5,10 @@
                     class="jobtitle-add-name"
                     placeholder="请输入职称名称"
                     prefix-icon="el-icon-plus"
-                    v-model="jobTitle.name"
+                    v-model="jobTitleAdd.name"
                     @keydown.enter.native="handleAdd">
             </el-input>
-            <el-select class="jobtitle-add-level" v-model="jobTitle.level" placeholder="请选择职称等级">
+            <el-select class="jobtitle-add-level" v-model="jobTitleAdd.level" placeholder="请选择职称等级">
                 <el-option
                         v-for="item in levels"
                         :key="item"
@@ -93,7 +93,7 @@
                             <el-tag>职称名称</el-tag>
                         </td>
                         <td>
-                            <el-input v-model="jobTitle.name" placeholder="请输入职称名称"></el-input>
+                            <el-input v-model="jobTitleEdit.name" placeholder="请输入职称名称"></el-input>
                         </td>
                     </tr>
                     <tr>
@@ -101,7 +101,7 @@
                             <el-tag>职称等级</el-tag>
                         </td>
                         <td>
-                            <el-select v-model="jobTitle.level" placeholder="请选择职称等级">
+                            <el-select v-model="jobTitleEdit.level" placeholder="请选择职称等级">
                                 <el-option
                                         v-for="item in levels"
                                         :key="item"
@@ -117,7 +117,7 @@
                         </td>
                         <td>
                             <el-switch
-                                    v-model="jobTitle.enabled"
+                                    v-model="jobTitleEdit.enabled"
                                     active-text="启用"
                                     inactive-text="禁用">
                             </el-switch>
@@ -145,10 +145,14 @@
                     '初级',
                     '员级',
                 ],
-                jobTitle: {
+                jobTitleAdd: {
+                    name: '',
+                    level: ''
+                },
+                jobTitleEdit: {
                     name: '',
                     level: '',
-                    enabled: true
+                    enabled: false
                 },
                 jobTitles: [],
                 multipleSelection: [],
@@ -169,19 +173,25 @@
                     }
                 });
             },
-            initJobTitle() {
-                this.jobTitle = {
+            initJobTitleAdd() {
+                this.jobTitleAdd = {
+                    name: '',
+                    level: ''
+                };
+            },
+            initJobTitleEdit() {
+                this.jobTitleEdit = {
                     name: '',
                     level: '',
-                    enabled: true
+                    enabled: false
                 };
             },
             handleAdd() {
-                if (this.jobTitle.name && this.jobTitle.level) {
-                    this.postRequest("/system/basic/jobTitle/add", this.jobTitle).then(resp => {
+                if (this.jobTitleAdd.name && this.jobTitleAdd.level) {
+                    this.postRequest("/system/basic/jobTitle/add", this.jobTitleAdd).then(resp => {
                         if (resp) {
                             this.initJobTitles();
-                            this.initJobTitle();
+                            this.initJobTitleAdd();
                         }
                     });
                 } else {
@@ -189,16 +199,15 @@
                 }
             },
             handleEdit(index, data) {
-                this.initJobTitle();
-                Object.assign(this.jobTitle, data);// 数据复制一份
+                Object.assign(this.jobTitleEdit, data);// 数据复制一份
                 this.dialogVisible = true;
             },
             handleEditConfirm() {
-                if (this.jobTitle.name && this.jobTitle.level) {
-                    this.putRequest("/system/basic/jobTitle/edit", this.jobTitle).then(resp => {
+                if (this.jobTitleEdit.name && this.jobTitleEdit.level) {
+                    this.putRequest("/system/basic/jobTitle/edit", this.jobTitleEdit).then(resp => {
                         if (resp) {
                             this.initJobTitles();
-                            this.initJobTitle();
+                            this.initJobTitleEdit();
                             this.dialogVisible = false;
                         }
                     });
@@ -215,7 +224,6 @@
                     this.deleteRequest("/system/basic/jobTitle/deleteById/" + data.id).then(resp => {
                         if (resp) {
                             this.initJobTitles();
-                            this.initJobTitle();
                         }
                     });
                 }).catch(() => {
@@ -241,7 +249,6 @@
                     this.deleteRequest("/system/basic/jobTitle/deleteByIds?" + ids).then(resp => {
                         if (resp) {
                             this.initJobTitles();
-                            this.initJobTitle();
                         }
                     });
                 }).catch(() => {

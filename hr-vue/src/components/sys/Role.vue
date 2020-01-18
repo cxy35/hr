@@ -147,7 +147,6 @@
                     this.deleteRequest("/system/basic/role/deleteById/" + role.id).then(resp => {
                         if (resp) {
                             this.initRoles();
-                            this.initRole();
                         }
                     });
                 }).catch(() => {
