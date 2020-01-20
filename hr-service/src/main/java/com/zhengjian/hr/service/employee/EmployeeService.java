@@ -2,11 +2,11 @@ package com.zhengjian.hr.service.employee;
 
 import com.zhengjian.hr.common.pojo.RespPageBean;
 import com.zhengjian.hr.mapper.EmployeeMapper;
-import com.zhengjian.hr.mapper.UserMapper;
 import com.zhengjian.hr.model.Employee;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
@@ -22,15 +22,23 @@ import java.util.List;
 public class EmployeeService {
     @Autowired
     EmployeeMapper employeeMapper;
+    @Autowired
+    JmsMessagingTemplate jmsMessagingTemplate;
 
-    private Logger logger = LoggerFactory.getLogger(EmployeeService.class);
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     private SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
     private SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
     private DecimalFormat decimalFormat = new DecimalFormat("##.00");
 
     public int add(Employee employee) {
         handleContractTerm(employee);
-        return employeeMapper.insertSelective(employee);
+        int r = employeeMapper.insertSelective(employee);
+        if (r == 1) {
+            // 获取关联信息
+            Employee employeeWithObj = employeeMapper.selectWithObjByPrimaryKey(employee.getId());
+            jmsMessagingTemplate.convertAndSend("employee.welcome", employeeWithObj);
+        }
+        return r;
     }
 
     public int add(List<Employee> employeeList) {

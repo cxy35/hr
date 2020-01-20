@@ -30,4 +30,6 @@ public interface EmployeeMapper {
     Integer getMaxWorkId();
 
     int inserts(@Param("employeeList") List<Employee> employeeList);
+
+    Employee selectWithObjByPrimaryKey(Integer id);
 }

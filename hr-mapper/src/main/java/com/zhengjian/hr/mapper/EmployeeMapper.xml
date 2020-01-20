@@ -71,7 +71,7 @@
     delete from t_employee
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.zhengjian.hr.model.Employee" >
+  <insert id="insert" parameterType="com.zhengjian.hr.model.Employee" useGeneratedKeys="true"  keyProperty="id" >
     insert into t_employee (id, name, gender, 
       birthday, idCard, wedlock, nationId, 
       nativePlace, politicsStatusId, email, 
@@ -93,7 +93,7 @@
       #{beginContract,jdbcType=DATE}, #{endContract,jdbcType=DATE}, #{workAge,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.zhengjian.hr.model.Employee" >
+  <insert id="insertSelective" parameterType="com.zhengjian.hr.model.Employee" useGeneratedKeys="true"  keyProperty="id" >
     insert into t_employee
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -642,4 +642,32 @@
       )
     </foreach>
   </insert>
+
+  <select id="selectWithObjByPrimaryKey" resultMap="EmployeeWithObj">
+    SELECT
+        e.*, p.`id` AS pid,
+        p.`name` AS pname,
+        n.`id` AS nid,
+        n.`name` AS nname,
+        d.`id` AS did,
+        d.`name` AS dname,
+        j.`id` AS jid,
+        j.`name` AS jname,
+        pos.`id` AS posid,
+        pos.`name` AS posname
+    FROM
+        t_employee e,
+        t_nation n,
+        t_politicsstatus p,
+        t_department d,
+        t_jobtitle j,
+        t_position pos
+    WHERE
+        e.`nationId` = n.`id`
+    AND e.`politicsStatusId` = p.`id`
+    AND e.`departmentId` = d.`id`
+    AND e.`jobTitleId` = j.`id`
+    AND e.`positionId` = pos.`id`
+    AND e.`id` = #{id}
+  </select>
 </mapper>
