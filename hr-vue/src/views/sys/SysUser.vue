@@ -143,6 +143,12 @@
                 })
             },
             handleHide(user) {
+                let uid = user.id;
+                if (!uid) {
+                    this.$message.error('用户不能为空');
+                    return;
+                }
+
                 let flag = false;// 是否需要更新
                 let roles = [];
                 Object.assign(roles, user.roles);// 数据复制一份
@@ -166,20 +172,15 @@
                 }
 
                 if (flag) {
-                    let uid = user.id;
-                    if (uid) {
-                        let url = "/system/user/editUserRole?uid=" + uid;
-                        this.selectedRoleIds.forEach(rid => {
-                            url += "&rids=" + rid;
-                        });
-                        this.putRequest(url).then(resp => {
-                            if (resp) {
-                                this.initUsers();
-                            }
-                        });
-                    } else {
-                        this.$message.error('用户不能为空');
-                    }
+                    let url = "/system/user/editUserRole?uid=" + uid;
+                    this.selectedRoleIds.forEach(rid => {
+                        url += "&rids=" + rid;
+                    });
+                    this.putRequest(url).then(resp => {
+                        if (resp) {
+                            this.initUsers();
+                        }
+                    });
                 }
             }
         }

@@ -35,8 +35,8 @@ public class EmployeeService {
         int r = employeeMapper.insertSelective(employee);
         if (r == 1) {
             // 获取关联信息
-            Employee employeeWithObj = employeeMapper.selectWithObjByPrimaryKey(employee.getId());
-            jmsMessagingTemplate.convertAndSend("employee.welcome", employeeWithObj);
+            Employee employeeWithAll = employeeMapper.selectWithAllByPrimaryKey(employee.getId());
+            jmsMessagingTemplate.convertAndSend("employee.welcome", employeeWithAll);
         }
         return r;
     }
@@ -56,6 +56,19 @@ public class EmployeeService {
     public int edit(Employee employee) {
         handleContractTerm(employee);
         return employeeMapper.updateByPrimaryKeySelective(employee);
+    }
+
+    public boolean editSalaryId(Integer id, Integer salaryId) {
+        if (id == null) {
+            return false;
+        }
+        Employee employee = employeeMapper.selectByPrimaryKey(id);
+        if (employee == null) {
+            return false;
+        }
+        employee.setSalaryId(salaryId);
+        int r = employeeMapper.updateByPrimaryKeySelective(employee);
+        return r == 1;
     }
 
     public List<Employee> getListAll() {

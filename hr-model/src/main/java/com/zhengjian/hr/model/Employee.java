@@ -37,6 +37,8 @@ public class Employee implements Serializable {
 
     private Integer positionId;
 
+    private Integer salaryId;
+
     private String engageForm;
 
     private String tiptopDegree;
@@ -73,6 +75,7 @@ public class Employee implements Serializable {
     private Department department;
     private JobTitle jobTitle;
     private Position position;
+    private Salary salary;
 
     public Integer getId() {
         return id;
@@ -192,6 +195,14 @@ public class Employee implements Serializable {
 
     public void setPositionId(Integer positionId) {
         this.positionId = positionId;
+    }
+
+    public Integer getSalaryId() {
+        return salaryId;
+    }
+
+    public void setSalaryId(Integer salaryId) {
+        this.salaryId = salaryId;
     }
 
     public String getEngageForm() {
@@ -338,6 +349,14 @@ public class Employee implements Serializable {
         this.position = position;
     }
 
+    public Salary getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Salary salary) {
+        this.salary = salary;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -356,6 +375,7 @@ public class Employee implements Serializable {
                 ", departmentId=" + departmentId +
                 ", jobTitleId=" + jobTitleId +
                 ", positionId=" + positionId +
+                ", salaryId=" + salaryId +
                 ", engageForm='" + engageForm + '\'' +
                 ", tiptopDegree='" + tiptopDegree + '\'' +
                 ", specialty='" + specialty + '\'' +
@@ -374,6 +394,7 @@ public class Employee implements Serializable {
                 ", department=" + department +
                 ", jobTitle=" + jobTitle +
                 ", position=" + position +
+                ", salary=" + salary +
                 '}';
     }
 }

@@ -31,5 +31,5 @@ public interface EmployeeMapper {
 
     int inserts(@Param("employeeList") List<Employee> employeeList);
 
-    Employee selectWithObjByPrimaryKey(Integer id);
+    Employee selectWithAllByPrimaryKey(Integer id);
 }

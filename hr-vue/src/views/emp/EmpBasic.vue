@@ -148,143 +148,38 @@
                     :data="employees"
                     stripe
                     border
+                    size="mini"
                     @selection-change="handleSelectionChange">
-                <el-table-column
-                        type="selection"
-                        width="55">
-                </el-table-column>
-                <el-table-column
-                        fixed
-                        prop="name"
-                        label="姓名"
-                        width="90">
-                </el-table-column>
-                <el-table-column
-                        prop="workId"
-                        label="工号"
-                        width="85">
-                </el-table-column>
-                <el-table-column
-                        prop="gender"
-                        label="性别"
-                        width="60"
-                        align="center">
-                </el-table-column>
-                <el-table-column
-                        prop="birthday"
-                        width="95"
-                        label="出生日期">
-                </el-table-column>
-                <el-table-column
-                        prop="idCard"
-                        width="150"
-                        label="身份证号码">
-                </el-table-column>
-                <el-table-column
-                        prop="wedlock"
-                        width="70"
-                        label="婚姻状况"
-                        align="center">
-                </el-table-column>
-                <el-table-column
-                        prop="nation.name"
-                        width="60"
-                        label="民族"
-                        align="center">
-                </el-table-column>
-                <el-table-column
-                        prop="nativePlace"
-                        width="80"
-                        label="籍贯"
-                        align="center">
-                </el-table-column>
-                <el-table-column
-                        prop="politicsStatus.name"
-                        label="政治面貌"
-                        align="center">
-                </el-table-column>
-                <el-table-column
-                        prop="email"
-                        width="180"
-                        label="电子邮箱">
-                </el-table-column>
-                <el-table-column
-                        prop="phone"
-                        width="100"
-                        label="电话号码">
-                </el-table-column>
-                <el-table-column
-                        prop="address"
-                        width="220"
-                        label="联系地址">
-                </el-table-column>
-                <el-table-column
-                        prop="department.name"
-                        width="100"
-                        label="所属部门">
-                </el-table-column>
-                <el-table-column
-                        prop="position.name"
-                        width="100"
-                        label="职位">
-                </el-table-column>
-                <el-table-column
-                        prop="jobTitle.name"
-                        width="100"
-                        label="职称">
-                </el-table-column>
-                <el-table-column
-                        prop="engageForm"
-                        width="100"
-                        label="聘用形式">
-                </el-table-column>
-                <el-table-column
-                        prop="tiptopDegree"
-                        width="80"
-                        label="最高学历">
-                </el-table-column>
-                <el-table-column
-                        prop="specialty"
-                        width="150"
-                        label="专业">
-                </el-table-column>
-                <el-table-column
-                        prop="school"
-                        width="150"
-                        label="毕业院校">
-                </el-table-column>
-                <el-table-column
-                        prop="beginDate"
-                        width="95"
-                        label="入职日期">
-                </el-table-column>
-                <el-table-column
-                        prop="conversionTime"
-                        width="95"
-                        label="转正日期">
-                </el-table-column>
-                <el-table-column
-                        prop="beginContract"
-                        width="95"
-                        label="合同起始日期">
-                </el-table-column>
-                <el-table-column
-                        prop="endContract"
-                        width="95"
-                        label="合同截止日期">
-                </el-table-column>
-                <el-table-column
-                        width="100"
-                        label="合同期限">
+                <el-table-column type="selection" width="55"></el-table-column>
+                <el-table-column prop="name" label="姓名" width="90" fixed></el-table-column>
+                <el-table-column prop="workId" label="工号" width="85"></el-table-column>
+                <el-table-column prop="gender" label="性别" width="60" align="center"></el-table-column>
+                <el-table-column prop="birthday" label="出生日期" width="95"></el-table-column>
+                <el-table-column prop="idCard" label="身份证号码" width="150"></el-table-column>
+                <el-table-column prop="wedlock" label="婚姻状况" width="70" align="center"></el-table-column>
+                <el-table-column prop="nation.name" label="民族" width="60" align="center"></el-table-column>
+                <el-table-column prop="nativePlace" label="籍贯" width="80" align="center"></el-table-column>
+                <el-table-column prop="politicsStatus.name" label="政治面貌" align="center"></el-table-column>
+                <el-table-column prop="email" label="电子邮箱" width="180"></el-table-column>
+                <el-table-column prop="phone" label="电话号码" width="100"></el-table-column>
+                <el-table-column prop="address" label="联系地址" width="220"></el-table-column>
+                <el-table-column prop="department.name" label="所属部门" width="100"></el-table-column>
+                <el-table-column prop="position.name" label="职位" width="100"></el-table-column>
+                <el-table-column prop="jobTitle.name" label="职称" width="100"></el-table-column>
+                <el-table-column prop="engageForm" label="聘用形式" width="100"></el-table-column>
+                <el-table-column prop="tiptopDegree" label="最高学历" width="80"></el-table-column>
+                <el-table-column prop="specialty" label="专业" width="150"></el-table-column>
+                <el-table-column prop="school" width="150" label="毕业院校"></el-table-column>
+                <el-table-column prop="beginDate" width="95" label="入职日期"></el-table-column>
+                <el-table-column prop="conversionTime" width="95" label="转正日期"></el-table-column>
+                <el-table-column prop="beginContract" width="95" label="合同起始日期"></el-table-column>
+                <el-table-column prop="endContract" width="95" label="合同截止日期"></el-table-column>
+                <el-table-column label="合同期限" width="100">
                     <template slot-scope="scope">
                         <span>{{scope.row.contractTerm}}</span>年
                     </template>
                 </el-table-column>
-                <el-table-column
-                        fixed="right"
-                        align="center"
-                        width="150"
-                        label="操作">
+                <el-table-column label="操作" width="150" align="center" fixed="right">
                     <template slot-scope="scope">
                         <el-button class="employee-table-btn" size="mini" @click="handleEdit(scope.row)">编辑</el-button>
                         <el-button class="employee-table-btn" size="mini" type="danger"
@@ -785,7 +680,7 @@
             initNations() {
                 if (!window.sessionStorage.getItem("nations")) {
                     this.getRequest('/employee/basic/getNationListAll').then(resp => {
-                            if (resp) {
+                        if (resp) {
                             this.nations = resp;
                             window.sessionStorage.setItem("nations", JSON.stringify(resp));
                         }

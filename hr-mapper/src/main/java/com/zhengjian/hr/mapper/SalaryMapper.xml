@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhengjian.hr.mapper.SalaryMapper" >
+  <resultMap id="BaseResultMap" type="com.zhengjian.hr.model.Salary" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="basicSalary" property="basicSalary" jdbcType="INTEGER" />
+    <result column="bonus" property="bonus" jdbcType="INTEGER" />
+    <result column="lunchSalary" property="lunchSalary" jdbcType="INTEGER" />
+    <result column="trafficSalary" property="trafficSalary" jdbcType="INTEGER" />
+    <result column="allSalary" property="allSalary" jdbcType="INTEGER" />
+    <result column="pensionBase" property="pensionBase" jdbcType="INTEGER" />
+    <result column="pensionPer" property="pensionPer" jdbcType="REAL" />
+    <result column="medicalBase" property="medicalBase" jdbcType="INTEGER" />
+    <result column="medicalPer" property="medicalPer" jdbcType="REAL" />
+    <result column="accumulationFundBase" property="accumulationFundBase" jdbcType="INTEGER" />
+    <result column="accumulationFundPer" property="accumulationFundPer" jdbcType="REAL" />
+    <result column="createDate" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, basicSalary, bonus, lunchSalary, trafficSalary, allSalary, pensionBase, 
+    pensionPer, medicalBase, medicalPer, accumulationFundBase, accumulationFundPer, createDate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_salary
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_salary
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zhengjian.hr.model.Salary" >
+    insert into t_salary (id, name, basicSalary, 
+      bonus, lunchSalary, trafficSalary, 
+      allSalary, pensionBase, pensionPer, 
+      medicalBase, medicalPer, accumulationFundBase, 
+      accumulationFundPer, createDate)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{basicSalary,jdbcType=INTEGER}, 
+      #{bonus,jdbcType=INTEGER}, #{lunchSalary,jdbcType=INTEGER}, #{trafficSalary,jdbcType=INTEGER}, 
+      #{allSalary,jdbcType=INTEGER}, #{pensionBase,jdbcType=INTEGER}, #{pensionPer,jdbcType=REAL}, 
+      #{medicalBase,jdbcType=INTEGER}, #{medicalPer,jdbcType=REAL}, #{accumulationFundBase,jdbcType=INTEGER}, 
+      #{accumulationFundPer,jdbcType=REAL}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhengjian.hr.model.Salary" >
+    insert into t_salary
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="basicSalary != null" >
+        basicSalary,
+      </if>
+      <if test="bonus != null" >
+        bonus,
+      </if>
+      <if test="lunchSalary != null" >
+        lunchSalary,
+      </if>
+      <if test="trafficSalary != null" >
+        trafficSalary,
+      </if>
+      <if test="allSalary != null" >
+        allSalary,
+      </if>
+      <if test="pensionBase != null" >
+        pensionBase,
+      </if>
+      <if test="pensionPer != null" >
+        pensionPer,
+      </if>
+      <if test="medicalBase != null" >
+        medicalBase,
+      </if>
+      <if test="medicalPer != null" >
+        medicalPer,
+      </if>
+      <if test="accumulationFundBase != null" >
+        accumulationFundBase,
+      </if>
+      <if test="accumulationFundPer != null" >
+        accumulationFundPer,
+      </if>
+      <if test="createDate != null" >
+        createDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="basicSalary != null" >
+        #{basicSalary,jdbcType=INTEGER},
+      </if>
+      <if test="bonus != null" >
+        #{bonus,jdbcType=INTEGER},
+      </if>
+      <if test="lunchSalary != null" >
+        #{lunchSalary,jdbcType=INTEGER},
+      </if>
+      <if test="trafficSalary != null" >
+        #{trafficSalary,jdbcType=INTEGER},
+      </if>
+      <if test="allSalary != null" >
+        #{allSalary,jdbcType=INTEGER},
+      </if>
+      <if test="pensionBase != null" >
+        #{pensionBase,jdbcType=INTEGER},
+      </if>
+      <if test="pensionPer != null" >
+        #{pensionPer,jdbcType=REAL},
+      </if>
+      <if test="medicalBase != null" >
+        #{medicalBase,jdbcType=INTEGER},
+      </if>
+      <if test="medicalPer != null" >
+        #{medicalPer,jdbcType=REAL},
+      </if>
+      <if test="accumulationFundBase != null" >
+        #{accumulationFundBase,jdbcType=INTEGER},
+      </if>
+      <if test="accumulationFundPer != null" >
+        #{accumulationFundPer,jdbcType=REAL},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhengjian.hr.model.Salary" >
+    update t_salary
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="basicSalary != null" >
+        basicSalary = #{basicSalary,jdbcType=INTEGER},
+      </if>
+      <if test="bonus != null" >
+        bonus = #{bonus,jdbcType=INTEGER},
+      </if>
+      <if test="lunchSalary != null" >
+        lunchSalary = #{lunchSalary,jdbcType=INTEGER},
+      </if>
+      <if test="trafficSalary != null" >
+        trafficSalary = #{trafficSalary,jdbcType=INTEGER},
+      </if>
+      <if test="allSalary != null" >
+        allSalary = #{allSalary,jdbcType=INTEGER},
+      </if>
+      <if test="pensionBase != null" >
+        pensionBase = #{pensionBase,jdbcType=INTEGER},
+      </if>
+      <if test="pensionPer != null" >
+        pensionPer = #{pensionPer,jdbcType=REAL},
+      </if>
+      <if test="medicalBase != null" >
+        medicalBase = #{medicalBase,jdbcType=INTEGER},
+      </if>
+      <if test="medicalPer != null" >
+        medicalPer = #{medicalPer,jdbcType=REAL},
+      </if>
+      <if test="accumulationFundBase != null" >
+        accumulationFundBase = #{accumulationFundBase,jdbcType=INTEGER},
+      </if>
+      <if test="accumulationFundPer != null" >
+        accumulationFundPer = #{accumulationFundPer,jdbcType=REAL},
+      </if>
+      <if test="createDate != null" >
+        createDate = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhengjian.hr.model.Salary" >
+    update t_salary
+    set name = #{name,jdbcType=VARCHAR},
+      basicSalary = #{basicSalary,jdbcType=INTEGER},
+      bonus = #{bonus,jdbcType=INTEGER},
+      lunchSalary = #{lunchSalary,jdbcType=INTEGER},
+      trafficSalary = #{trafficSalary,jdbcType=INTEGER},
+      allSalary = #{allSalary,jdbcType=INTEGER},
+      pensionBase = #{pensionBase,jdbcType=INTEGER},
+      pensionPer = #{pensionPer,jdbcType=REAL},
+      medicalBase = #{medicalBase,jdbcType=INTEGER},
+      medicalPer = #{medicalPer,jdbcType=REAL},
+      accumulationFundBase = #{accumulationFundBase,jdbcType=INTEGER},
+      accumulationFundPer = #{accumulationFundPer,jdbcType=REAL},
+      createDate = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <delete id="deleteByPrimaryKeys">
+    delete from t_salary where id in
+    <foreach collection="ids" item="id" separator="," open="(" close=")">
+      #{id}
+    </foreach>
+  </delete>
+
+  <select id="getListAll" resultMap="BaseResultMap">
+    select * from t_salary;
+  </select>
+</mapper>

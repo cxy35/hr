@@ -48,12 +48,16 @@ public class UserService implements UserDetailsService {
 
     /**
      * 更新用户与角色，先根据 uid 删除所有，再新增
-     * @param uid 用户id
+     *
+     * @param uid  用户id
      * @param rids 角色id
      * @return
      */
     @Transactional
     public boolean editUserRole(Integer uid, Integer[] rids) {
+        if (uid == null) {
+            return false;
+        }
         userRoleMapper.deleteByUid(uid);
         if (rids == null || rids.length == 0) {
             return true;

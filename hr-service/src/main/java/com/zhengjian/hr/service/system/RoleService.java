@@ -40,6 +40,9 @@ public class RoleService {
      */
     @Transactional
     public boolean editRoleMenu(Integer rid, Integer[] mids) {
+        if (rid == null) {
+            return false;
+        }
         menuRoleMapper.deleteByRid(rid);
         if (mids == null || mids.length == 0) {
             return true;

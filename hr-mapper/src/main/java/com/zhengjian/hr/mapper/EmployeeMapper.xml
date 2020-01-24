@@ -17,6 +17,7 @@
     <result column="departmentId" property="departmentId" jdbcType="INTEGER" />
     <result column="jobTitleId" property="jobTitleId" jdbcType="INTEGER" />
     <result column="positionId" property="positionId" jdbcType="INTEGER" />
+    <result column="salaryId" property="salaryId" jdbcType="INTEGER" />
     <result column="engageForm" property="engageForm" jdbcType="VARCHAR" />
     <result column="tiptopDegree" property="tiptopDegree" jdbcType="CHAR" />
     <result column="specialty" property="specialty" jdbcType="VARCHAR" />
@@ -32,7 +33,7 @@
     <result column="workAge" property="workAge" jdbcType="INTEGER" />
   </resultMap>
 
-  <resultMap id="EmployeeWithObj" type="com.zhengjian.hr.model.Employee" extends="BaseResultMap">
+  <resultMap id="EmployeeWithAll" type="com.zhengjian.hr.model.Employee" extends="BaseResultMap">
     <association property="nation" javaType="com.zhengjian.hr.model.Nation">
       <id column="nid" property="id"/>
       <result column="nname" property="name"/>
@@ -53,11 +54,27 @@
       <id column="posid" property="id"/>
       <result column="posname" property="name"/>
     </association>
+    <association property="salary" javaType="com.zhengjian.hr.model.Salary">
+      <id column="sid" property="id" jdbcType="INTEGER" />
+      <result column="sname" property="name" jdbcType="VARCHAR" />
+      <result column="sbasicSalary" property="basicSalary" jdbcType="INTEGER" />
+      <result column="sbonus" property="bonus" jdbcType="INTEGER" />
+      <result column="slunchSalary" property="lunchSalary" jdbcType="INTEGER" />
+      <result column="strafficSalary" property="trafficSalary" jdbcType="INTEGER" />
+      <result column="sallSalary" property="allSalary" jdbcType="INTEGER" />
+      <result column="spensionBase" property="pensionBase" jdbcType="INTEGER" />
+      <result column="spensionPer" property="pensionPer" jdbcType="REAL" />
+      <result column="smedicalBase" property="medicalBase" jdbcType="INTEGER" />
+      <result column="smedicalPer" property="medicalPer" jdbcType="REAL" />
+      <result column="saccumulationFundBase" property="accumulationFundBase" jdbcType="INTEGER" />
+      <result column="saccumulationFundPer" property="accumulationFundPer" jdbcType="REAL" />
+      <result column="screateDate" property="createDate" jdbcType="TIMESTAMP" />
+    </association>
   </resultMap>
 
   <sql id="Base_Column_List" >
     id, name, gender, birthday, idCard, wedlock, nationId, nativePlace, politicsStatusId, 
-    email, phone, address, departmentId, jobTitleId, positionId, engageForm, tiptopDegree, 
+    email, phone, address, departmentId, jobTitleId, positionId, salaryId, engageForm, tiptopDegree,
     specialty, school, beginDate, workState, workId, contractTerm, conversionTime, notWorkDate, 
     beginContract, endContract, workAge
   </sql>
@@ -76,7 +93,7 @@
       birthday, idCard, wedlock, nationId, 
       nativePlace, politicsStatusId, email, 
       phone, address, departmentId, 
-      jobTitleId, positionId, engageForm, 
+      jobTitleId, positionId, salaryId, engageForm,
       tiptopDegree, specialty, school, 
       beginDate, workState, workId, 
       contractTerm, conversionTime, notWorkDate, 
@@ -86,7 +103,7 @@
       #{birthday,jdbcType=DATE}, #{idCard,jdbcType=CHAR}, #{wedlock,jdbcType=CHAR}, #{nationId,jdbcType=INTEGER}, 
       #{nativePlace,jdbcType=VARCHAR}, #{politicsStatusId,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, 
       #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, 
-      #{jobTitleId,jdbcType=INTEGER}, #{positionId,jdbcType=INTEGER}, #{engageForm,jdbcType=VARCHAR}, 
+      #{jobTitleId,jdbcType=INTEGER}, #{positionId,jdbcType=INTEGER}, #{salaryId,jdbcType=INTEGER}, #{engageForm,jdbcType=VARCHAR},
       #{tiptopDegree,jdbcType=CHAR}, #{specialty,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, 
       #{beginDate,jdbcType=DATE}, #{workState,jdbcType=CHAR}, #{workId,jdbcType=CHAR}, 
       #{contractTerm,jdbcType=DOUBLE}, #{conversionTime,jdbcType=DATE}, #{notWorkDate,jdbcType=DATE}, 
@@ -140,6 +157,9 @@
       </if>
       <if test="positionId != null" >
         positionId,
+      </if>
+      <if test="salaryId != null" >
+        salaryId,
       </if>
       <if test="engageForm != null" >
         engageForm,
@@ -227,6 +247,9 @@
       <if test="positionId != null" >
         #{positionId,jdbcType=INTEGER},
       </if>
+      <if test="salaryId != null" >
+        #{salaryId,jdbcType=INTEGER},
+      </if>
       <if test="engageForm != null" >
         #{engageForm,jdbcType=VARCHAR},
       </if>
@@ -313,6 +336,9 @@
       <if test="positionId != null" >
         positionId = #{positionId,jdbcType=INTEGER},
       </if>
+      <if test="salaryId != null" >
+        salaryId = #{salaryId,jdbcType=INTEGER},
+      </if>
       <if test="engageForm != null" >
         engageForm = #{engageForm,jdbcType=VARCHAR},
       </if>
@@ -371,6 +397,7 @@
       departmentId = #{departmentId,jdbcType=INTEGER},
       jobTitleId = #{jobTitleId,jdbcType=INTEGER},
       positionId = #{positionId,jdbcType=INTEGER},
+      salaryId = #{salaryId,jdbcType=INTEGER},
       engageForm = #{engageForm,jdbcType=VARCHAR},
       tiptopDegree = #{tiptopDegree,jdbcType=CHAR},
       specialty = #{specialty,jdbcType=VARCHAR},
@@ -398,10 +425,9 @@
     select * from t_employee;
   </select>
 
-  <select id="getPage" resultMap="EmployeeWithObj">
+  <select id="getPage" resultMap="EmployeeWithAll">
     SELECT
-        e.*,
-        p.`id` AS pid,
+        e.*, p.`id` AS pid,
         p.`name` AS pname,
         n.`id` AS nid,
         n.`name` AS nname,
@@ -410,108 +436,121 @@
         j.`id` AS jid,
         j.`name` AS jname,
         pos.`id` AS posid,
-        pos.`name` AS posname
+        pos.`name` AS posname,
+        s.`id` AS sid,
+        s.`name` AS sname,
+        s.`basicSalary` AS sbasicSalary,
+        s.`bonus` AS sbonus,
+        s.`lunchSalary` AS slunchSalary,
+        s.`trafficSalary` AS strafficSalary,
+        s.`allSalary` AS sallSalary,
+        s.`pensionBase` AS spensionBase,
+        s.`pensionPer` AS spensionPer,
+        s.`medicalBase` AS smedicalBase,
+        s.`medicalPer` AS smedicalPer,
+        s.`accumulationFundBase` AS saccumulationFundBase,
+        s.`accumulationFundPer` AS saccumulationFundPer,
+        s.`createDate` AS screateDate
     FROM
-        t_employee e,
-        t_nation n,
-        t_politicsstatus p,
-        t_department d,
-        t_jobtitle j,
-        t_position pos
-    WHERE
-        e.`nationId` = n.`id`
-    AND e.`politicsStatusId` = p.`id`
-    AND e.`departmentId` = d.`id`
-    AND e.`jobTitleId` = j.`id`
-    AND e.`positionId` = pos.`id`
+        t_employee e
+    LEFT JOIN t_nation n ON e.`nationId` = n.`id`
+    LEFT JOIN t_politicsstatus p ON e.`politicsStatusId` = p.`id`
+    LEFT JOIN t_department d ON e.`departmentId` = d.`id`
+    LEFT JOIN t_jobtitle j ON e.`jobTitleId` = j.`id`
+    LEFT JOIN t_position pos ON e.`positionId` = pos.`id`
+    LEFT JOIN t_salary s ON e.`salaryId` = s.`id`
+    <where>
+      <if test="employee != null">
+        <if test="employee.name != null and employee.name != ''" >
+          and e.name like concat('%', #{employee.name,jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="employee.gender != null" >
+          and e.gender = #{employee.gender,jdbcType=CHAR}
+        </if>
+        <if test="employee.birthday != null" >
+          and e.birthday = #{employee.birthday,jdbcType=DATE}
+        </if>
+        <if test="employee.idCard != null" >
+          and e.idCard = #{employee.idCard,jdbcType=CHAR}
+        </if>
+        <if test="employee.wedlock != null" >
+          and e.wedlock = #{employee.wedlock,jdbcType=CHAR}
+        </if>
+        <if test="employee.nationId != null" >
+          and e.nationId = #{employee.nationId,jdbcType=INTEGER}
+        </if>
+        <if test="employee.nativePlace != null" >
+          and e.nativePlace = #{employee.nativePlace,jdbcType=VARCHAR}
+        </if>
+        <if test="employee.politicsStatusId != null" >
+          and e.politicsStatusId = #{employee.politicsStatusId,jdbcType=INTEGER}
+        </if>
+        <if test="employee.email != null" >
+          and e.email = #{employee.email,jdbcType=VARCHAR}
+        </if>
+        <if test="employee.phone != null" >
+          and e.phone = #{employee.phone,jdbcType=VARCHAR}
+        </if>
+        <if test="employee.address != null" >
+          and e.address = #{employee.address,jdbcType=VARCHAR}
+        </if>
+        <if test="employee.departmentId != null" >
+          and e.departmentId = #{employee.departmentId,jdbcType=INTEGER}
+        </if>
+        <if test="employee.jobTitleId != null" >
+          and e.jobTitleId = #{employee.jobTitleId,jdbcType=INTEGER}
+        </if>
+        <if test="employee.positionId != null" >
+          and e.positionId = #{employee.positionId,jdbcType=INTEGER}
+        </if>
+        <if test="employee.salaryId != null" >
+          and e.salaryId = #{employee.salaryId,jdbcType=INTEGER}
+        </if>
+        <if test="employee.engageForm != null" >
+          and e.engageForm = #{employee.engageForm,jdbcType=VARCHAR}
+        </if>
+        <if test="employee.tiptopDegree != null" >
+          and e.tiptopDegree = #{employee.tiptopDegree,jdbcType=CHAR}
+        </if>
+        <if test="employee.specialty != null" >
+          and e.specialty = #{employee.specialty,jdbcType=VARCHAR}
+        </if>
+        <if test="employee.school != null" >
+          and e.school = #{employee.school,jdbcType=VARCHAR}
+        </if>
+        <if test="employee.beginDate != null" >
+          and e.beginDate = #{employee.beginDate,jdbcType=DATE}
+        </if>
+        <if test="employee.workState != null" >
+          and e.workState = #{employee.workState,jdbcType=CHAR}
+        </if>
+        <if test="employee.workId != null" >
+          and e.workId = #{employee.workId,jdbcType=CHAR}
+        </if>
+        <if test="employee.contractTerm != null" >
+          and e.contractTerm = #{employee.contractTerm,jdbcType=DOUBLE}
+        </if>
+        <if test="employee.conversionTime != null" >
+          and e.conversionTime = #{employee.conversionTime,jdbcType=DATE}
+        </if>
+        <if test="employee.notWorkDate != null" >
+          and e.notWorkDate = #{employee.notWorkDate,jdbcType=DATE}
+        </if>
+        <if test="employee.beginContract != null" >
+          and e.beginContract = #{employee.beginContract,jdbcType=DATE}
+        </if>
+        <if test="employee.endContract != null" >
+          and e.endContract = #{employee.endContract,jdbcType=DATE}
+        </if>
+        <if test="employee.workAge != null" >
+          and e.workAge = #{employee.workAge,jdbcType=INTEGER}
+        </if>
+      </if>
 
-    <if test="employee != null">
-      <if test="employee.name != null and employee.name != ''" >
-        and e.name like concat('%', #{employee.name,jdbcType=VARCHAR}, '%')
+      <if test="beginDateScope != null">
+        and e.beginDate between #{beginDateScope[0]} and #{beginDateScope[1]}
       </if>
-      <if test="employee.gender != null" >
-        and e.gender = #{employee.gender,jdbcType=CHAR}
-      </if>
-      <if test="employee.birthday != null" >
-        and e.birthday = #{employee.birthday,jdbcType=DATE}
-      </if>
-      <if test="employee.idCard != null" >
-        and e.idCard = #{employee.idCard,jdbcType=CHAR}
-      </if>
-      <if test="employee.wedlock != null" >
-        and e.wedlock = #{employee.wedlock,jdbcType=CHAR}
-      </if>
-      <if test="employee.nationId != null" >
-        and e.nationId = #{employee.nationId,jdbcType=INTEGER}
-      </if>
-      <if test="employee.nativePlace != null" >
-        and e.nativePlace = #{employee.nativePlace,jdbcType=VARCHAR}
-      </if>
-      <if test="employee.politicsStatusId != null" >
-        and e.politicsStatusId = #{employee.politicsStatusId,jdbcType=INTEGER}
-      </if>
-      <if test="employee.email != null" >
-        and e.email = #{employee.email,jdbcType=VARCHAR}
-      </if>
-      <if test="employee.phone != null" >
-        and e.phone = #{employee.phone,jdbcType=VARCHAR}
-      </if>
-      <if test="employee.address != null" >
-        and e.address = #{employee.address,jdbcType=VARCHAR}
-      </if>
-      <if test="employee.departmentId != null" >
-        and e.departmentId = #{employee.departmentId,jdbcType=INTEGER}
-      </if>
-      <if test="employee.jobTitleId != null" >
-        and e.jobTitleId = #{employee.jobTitleId,jdbcType=INTEGER}
-      </if>
-      <if test="employee.positionId != null" >
-        and e.positionId = #{employee.positionId,jdbcType=INTEGER}
-      </if>
-      <if test="employee.engageForm != null" >
-        and e.engageForm = #{employee.engageForm,jdbcType=VARCHAR}
-      </if>
-      <if test="employee.tiptopDegree != null" >
-        and e.tiptopDegree = #{employee.tiptopDegree,jdbcType=CHAR}
-      </if>
-      <if test="employee.specialty != null" >
-        and e.specialty = #{employee.specialty,jdbcType=VARCHAR}
-      </if>
-      <if test="employee.school != null" >
-        and e.school = #{employee.school,jdbcType=VARCHAR}
-      </if>
-      <if test="employee.beginDate != null" >
-        and e.beginDate = #{employee.beginDate,jdbcType=DATE}
-      </if>
-      <if test="employee.workState != null" >
-        and e.workState = #{employee.workState,jdbcType=CHAR}
-      </if>
-      <if test="employee.workId != null" >
-        and e.workId = #{employee.workId,jdbcType=CHAR}
-      </if>
-      <if test="employee.contractTerm != null" >
-        and e.contractTerm = #{employee.contractTerm,jdbcType=DOUBLE}
-      </if>
-      <if test="employee.conversionTime != null" >
-        and e.conversionTime = #{employee.conversionTime,jdbcType=DATE}
-      </if>
-      <if test="employee.notWorkDate != null" >
-        and e.notWorkDate = #{employee.notWorkDate,jdbcType=DATE}
-      </if>
-      <if test="employee.beginContract != null" >
-        and e.beginContract = #{employee.beginContract,jdbcType=DATE}
-      </if>
-      <if test="employee.endContract != null" >
-        and e.endContract = #{employee.endContract,jdbcType=DATE}
-      </if>
-      <if test="employee.workAge != null" >
-        and e.workAge = #{employee.workAge,jdbcType=INTEGER}
-      </if>
-    </if>
-
-    <if test="beginDateScope != null">
-      and e.beginDate between #{beginDateScope[0]} and #{beginDateScope[1]}
-    </if>
+    </where>
 
     order by e.id
 
@@ -565,6 +604,9 @@
         </if>
         <if test="employee.positionId != null" >
           and e.positionId = #{employee.positionId,jdbcType=INTEGER}
+        </if>
+        <if test="employee.salaryId != null" >
+          and e.salaryId = #{employee.salaryId,jdbcType=INTEGER}
         </if>
         <if test="employee.engageForm != null" >
           and e.engageForm = #{employee.engageForm,jdbcType=VARCHAR}
@@ -622,7 +664,7 @@
     birthday, idCard, wedlock, nationId,
     nativePlace, politicsStatusId, email,
     phone, address, departmentId,
-    jobTitleId, positionId, engageForm,
+    jobTitleId, positionId, salaryId, engageForm,
     tiptopDegree, specialty, school,
     beginDate, workState, workId,
     contractTerm, conversionTime, notWorkDate,
@@ -634,7 +676,7 @@
       #{employee.birthday,jdbcType=DATE}, #{employee.idCard,jdbcType=CHAR}, #{employee.wedlock,jdbcType=CHAR}, #{employee.nationId,jdbcType=INTEGER},
       #{employee.nativePlace,jdbcType=VARCHAR}, #{employee.politicsStatusId,jdbcType=INTEGER}, #{employee.email,jdbcType=VARCHAR},
       #{employee.phone,jdbcType=VARCHAR}, #{employee.address,jdbcType=VARCHAR}, #{employee.departmentId,jdbcType=INTEGER},
-      #{employee.jobTitleId,jdbcType=INTEGER}, #{employee.positionId,jdbcType=INTEGER}, #{employee.engageForm,jdbcType=VARCHAR},
+      #{employee.jobTitleId,jdbcType=INTEGER}, #{employee.positionId,jdbcType=INTEGER}, #{employee.salaryId,jdbcType=INTEGER}, #{employee.engageForm,jdbcType=VARCHAR},
       #{employee.tiptopDegree,jdbcType=CHAR}, #{employee.specialty,jdbcType=VARCHAR}, #{employee.school,jdbcType=VARCHAR},
       #{employee.beginDate,jdbcType=DATE}, #{employee.workState,jdbcType=CHAR}, #{employee.workId,jdbcType=CHAR},
       #{employee.contractTerm,jdbcType=DOUBLE}, #{employee.conversionTime,jdbcType=DATE}, #{employee.notWorkDate,jdbcType=DATE},
@@ -643,9 +685,10 @@
     </foreach>
   </insert>
 
-  <select id="selectWithObjByPrimaryKey" resultMap="EmployeeWithObj">
+  <select id="selectWithAllByPrimaryKey" resultMap="EmployeeWithAll">
     SELECT
-        e.*, p.`id` AS pid,
+        e.*,
+        p.`id` AS pid,
         p.`name` AS pname,
         n.`id` AS nid,
         n.`name` AS nname,
@@ -654,20 +697,18 @@
         j.`id` AS jid,
         j.`name` AS jname,
         pos.`id` AS posid,
-        pos.`name` AS posname
+        pos.`name` AS posname,
+        s.`id` AS sid,
+        s.`name` AS sname
     FROM
-        t_employee e,
-        t_nation n,
-        t_politicsstatus p,
-        t_department d,
-        t_jobtitle j,
-        t_position pos
+        t_employee e
+    LEFT JOIN t_nation n ON e.`nationId` = n.`id`
+    LEFT JOIN t_politicsstatus p ON e.`politicsStatusId` = p.`id`
+    LEFT JOIN t_department d ON e.`departmentId` = d.`id`
+    LEFT JOIN t_jobtitle j ON e.`jobTitleId` = j.`id`
+    LEFT JOIN t_position pos ON e.`positionId` = pos.`id`
+    LEFT JOIN t_salary s ON e.`salaryId` = s.`id`
     WHERE
-        e.`nationId` = n.`id`
-    AND e.`politicsStatusId` = p.`id`
-    AND e.`departmentId` = d.`id`
-    AND e.`jobTitleId` = j.`id`
-    AND e.`positionId` = pos.`id`
-    AND e.`id` = #{id}
+        e.`id` = #{id}
   </select>
 </mapper>
