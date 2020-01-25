@@ -28,34 +28,14 @@
                     :data="jobTitles"
                     stripe
                     border
+                    size="mini"
                     @selection-change="handleSelectionChange">
-                <el-table-column
-                        type="selection"
-                        width="55">
-                </el-table-column>
-                <el-table-column
-                        prop="id"
-                        label="编号"
-                        width="60">
-                </el-table-column>
-                <el-table-column
-                        prop="name"
-                        label="职称名称"
-                        width="180">
-                </el-table-column>
-                <el-table-column
-                        prop="level"
-                        label="职称等级"
-                        width="100">
-                </el-table-column>
-                <el-table-column
-                        prop="createDate"
-                        label="创建时间"
-                        width="180">
-                </el-table-column>
-                <el-table-column
-                        label="是否启用"
-                        width="100">
+                <el-table-column type="selection" width="55"></el-table-column>
+                <el-table-column prop="id" label="编号" width="60"></el-table-column>
+                <el-table-column prop="name" label="职称名称" width="180"></el-table-column>
+                <el-table-column prop="level" label="职称等级" width="100"></el-table-column>
+                <el-table-column prop="createDate" label="创建时间" width="180"></el-table-column>
+                <el-table-column label="是否启用" width="100">
                     <template slot-scope="scope">
                         <el-tag type="success" v-if="scope.row.enabled">已启用</el-tag>
                         <el-tag type="danger" v-else>未启用</el-tag>
@@ -64,7 +44,8 @@
                 <el-table-column label="操作" align="center">
                     <template slot-scope="scope">
                         <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                        <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                        <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除
+                        </el-button>
                     </template>
                 </el-table-column>
             </el-table>
