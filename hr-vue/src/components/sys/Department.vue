@@ -46,17 +46,17 @@
             </el-tree>
         </div>
         <el-dialog
-                title="新增部门"
-                :visible.sync="addDialogVisible"
+                :title="dialogTitle"
+                :visible.sync="dialogVisible"
                 width="30%">
             <div>
-                <table class="department-add-table">
-                    <tr>
+                <table class="department-table">
+                    <tr v-if="!department.id">
                         <td>
                             <el-tag>上级部门</el-tag>
                         </td>
                         <td>
-                            {{this.departmentAdd.parentName}}
+                            {{this.department.parentName}}
                         </td>
                     </tr>
                     <tr>
@@ -64,36 +64,15 @@
                             <el-tag>部门名称</el-tag>
                         </td>
                         <td>
-                            <el-input v-model="departmentAdd.name" placeholder="请输入部门名称"></el-input>
+                            <el-input v-model="department.name" placeholder="请输入部门名称"></el-input>
                         </td>
                     </tr>
                 </table>
             </div>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="addDialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="handleAddConfirm">确 定</el-button>
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="handleAddEditConfirm">确 定</el-button>
               </span>
-        </el-dialog>
-        <el-dialog
-                title="编辑部门"
-                :visible.sync="editDialogVisible"
-                width="30%">
-            <div>
-                <table class="department-edit-table">
-                    <tr>
-                        <td>
-                            <el-tag>部门名称</el-tag>
-                        </td>
-                        <td>
-                            <el-input v-model="departmentEdit.name" placeholder="请输入部门名称"></el-input>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="editDialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="handleEditConfirm">确 定</el-button>
-            </span>
         </el-dialog>
     </div>
 </template>
@@ -109,15 +88,12 @@
                     children: 'children',
                     label: 'name'
                 },
-                addDialogVisible: false,
-                editDialogVisible: false,
-                departmentAdd: {
+                dialogTitle: '',
+                dialogVisible: false,
+                department: {
                     name: '',
-                    parentId: -1,
-                    parentName: ''
-                },
-                departmentEdit: {
-                    name: ''
+                    parentId: null, // 新增时需要
+                    parentName: '' // 新增时需要显示
                 },
                 loading: false
             };
@@ -140,16 +116,11 @@
                     }
                 });
             },
-            initDepartmentAdd() {
-                this.departmentAdd = {
+            initDepartment() {
+                this.department = {
                     name: '',
-                    parentId: -1,
+                    parentId: null,
                     parentName: ''
-                };
-            },
-            initDepartmentEdit() {
-                this.departmentEdit = {
-                    name: ''
                 };
             },
             filterNode(value, data) {
@@ -201,38 +172,41 @@
                 }
             },
             handleAdd(data) {
-                this.departmentAdd.parentId = data.id;
-                this.departmentAdd.parentName = data.name;
-                this.addDialogVisible = true;
-            },
-            handleAddConfirm() {
-                if (this.departmentAdd.name && this.departmentAdd.parentId) {
-                    this.postRequest("/system/basic/department/add", this.departmentAdd).then(resp => {
-                        if (resp) {
-                            // 只处理当前新增的数据，不初始化整个 departments
-                            this.handleTreeAdd(this.departments, resp.obj);
-                            this.initDepartmentAdd();
-                            this.addDialogVisible = false;
-                        }
-                    });
-                } else {
-                    this.$message.error('部门名称和上级部门不能为空');
-                }
+                this.initDepartment();
+                this.department.parentId = data.id;
+                this.department.parentName = data.name;
+                this.dialogTitle = '新增部门';
+                this.dialogVisible = true;
             },
             handleEdit(data) {
-                Object.assign(this.departmentEdit, data);// 数据复制一份
-                this.editDialogVisible = true;
+                this.initDepartment();
+                Object.assign(this.department, data);// 数据复制一份
+                this.dialogTitle = '编辑部门';
+                this.dialogVisible = true;
             },
-            handleEditConfirm() {
-                if (this.departmentEdit.name) {
-                    this.putRequest("/system/basic/department/edit", this.departmentEdit).then(resp => {
-                        if (resp) {
-                            // 只处理当前编辑的数据，不初始化整个 departments
-                            this.handleTreeEdit(this.departments, this.departmentEdit);
-                            this.initDepartmentEdit();
-                            this.editDialogVisible = false;
+            handleAddEditConfirm() {
+                if (this.department.name) {
+                    if (this.department.id) {
+                        this.putRequest("/system/basic/department/edit", this.department).then(resp => {
+                            if (resp) {
+                                // 只处理当前编辑的数据，不初始化整个 departments
+                                this.handleTreeEdit(this.departments, this.department);
+                                this.dialogVisible = false;
+                            }
+                        });
+                    } else {
+                        if (this.department.parentId) {
+                            this.postRequest("/system/basic/department/add", this.department).then(resp => {
+                                if (resp) {
+                                    // 只处理当前新增的数据，不初始化整个 departments
+                                    this.handleTreeAdd(this.departments, resp.obj);
+                                    this.dialogVisible = false;
+                                }
+                            });
+                        } else {
+                            this.$message.error('上级部门不能为空');
                         }
-                    });
+                    }
                 } else {
                     this.$message.error('部门名称不能为空');
                 }
@@ -287,7 +261,7 @@
         padding: 2px 10px;
     }
 
-    .department-add-table td, .department-edit-table td {
+    .department-table td {
         padding: 10px 10px 0px 0px;
     }
 </style>
