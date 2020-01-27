@@ -8,8 +8,8 @@ export const initMenu = (router, store) => {
         if (data) {
             let fmtRoutes = formatRoutes(data);
             router.addRoutes(fmtRoutes);
-            store.commit('initRoutes', fmtRoutes); // 同时给全局routes设值
-            // store.dispatch('connect');
+            store.commit('initRoutes', fmtRoutes); // 同时给全局 routes 设值
+            store.dispatch('initChatConnect'); // 初始化在线聊天的 WebSocket 连接，并开始接收消息
         }
     })
 }

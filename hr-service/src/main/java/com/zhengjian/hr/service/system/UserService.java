@@ -5,7 +5,6 @@ import com.zhengjian.hr.mapper.RoleMapper;
 import com.zhengjian.hr.mapper.UserMapper;
 import com.zhengjian.hr.mapper.UserRoleMapper;
 import com.zhengjian.hr.model.User;
-import com.zhengjian.hr.model.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -66,7 +65,19 @@ public class UserService implements UserDetailsService {
         return r == rids.length;
     }
 
+    public List<User> getList(User user) {
+        if (user == null) {
+            user = new User();
+        }
+        user.setId(UserUtils.getCurUserId());// 排除当前用户
+        List<User> list = userMapper.getList(user);
+        return list;
+    }
+
     public List<User> getListWithRoles(User user) {
+        if (user == null) {
+            user = new User();
+        }
         user.setId(UserUtils.getCurUserId());// 排除当前用户
         List<User> list = userMapper.getListWithRoles(user);
         return list;

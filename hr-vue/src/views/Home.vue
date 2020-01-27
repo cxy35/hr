@@ -4,6 +4,7 @@
             <el-header class="home-header">
                 <div class="home-header-title">HR 管理系统</div>
                 <div>
+                    <el-button class="home-header-chat" type="text" icon="el-icon-message" size="normal" @click="handleChat"></el-button>
                     <el-dropdown class="home-header-user" @command="commandHandler">
                         <span class="home-header-user-name">
                             {{user.name}}<i><img :src="user.userface" alt=""></i>
@@ -61,9 +62,9 @@
             }
         },
         methods: {
-            /*goChat() {
+            handleChat() {
                 this.$router.push("/chat");
-            },*/
+            },
             commandHandler(command) {
                 if (command == 'logout') {
                     this.$confirm('此操作将注销登录, 是否继续?', '提示', {
@@ -100,6 +101,11 @@
     .home-header-title {
         font-size: 30px;
         font-family: 华文行楷;
+        color: #ffffff;
+    }
+
+    .home-header-chat{
+        margin-right: 10px;
         color: #ffffff;
     }
 

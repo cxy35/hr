@@ -163,6 +163,44 @@
     select * from t_user where username = #{username}
   </select>
 
+  <select id="getList" parameterType="com.zhengjian.hr.model.User" resultMap="BaseResultMap">
+    SELECT u.* FROM t_user u
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="id != null" >
+        and u.id != #{id,jdbcType=INTEGER}
+      </if>
+      <if test="name != null" >
+        and u.name like concat('%', #{name,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="phone != null" >
+        and u.phone = #{phone,jdbcType=CHAR}
+      </if>
+      <if test="telephone != null" >
+        and u.telephone = #{telephone,jdbcType=VARCHAR}
+      </if>
+      <if test="address != null" >
+        and u.address = #{address,jdbcType=VARCHAR}
+      </if>
+      <!--<if test="enabled != null" >
+        and u.enabled = #{enabled,jdbcType=BIT}
+      </if>-->
+      <if test="username != null" >
+        and u.username = #{username,jdbcType=VARCHAR}
+      </if>
+      <if test="password != null" >
+        and u.password = #{password,jdbcType=VARCHAR}
+      </if>
+      <if test="userface != null" >
+        and u.userface = #{userface,jdbcType=VARCHAR}
+      </if>
+      <if test="remark != null" >
+        and u.remark = #{remark,jdbcType=VARCHAR}
+      </if>
+    </trim>
+    ORDER BY
+    u.id
+  </select>
+
   <select id="getListWithRoles" parameterType="com.zhengjian.hr.model.User" resultMap="UserWithRoles">
     SELECT
         u.id,
