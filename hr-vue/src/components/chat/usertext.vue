@@ -25,7 +25,7 @@
                     let msgObj = new Object();
                     msgObj.to = this.currentSession.username;
                     msgObj.content = this.content;
-                    console.log(JSON.stringify(msgObj));
+                    // console.log("send >>>>>> "+JSON.stringify(msgObj));
                     this.$store.state.stomp.send('/ws/chat', {}, JSON.stringify(msgObj));
                     this.$store.commit('addMessage', msgObj);
                     this.content = '';
@@ -43,6 +43,7 @@
         width: 100%;
         height: 30%;
         border-top: solid 1px #DDD;
+        box-sizing: border-box;
 
         > textarea {
             padding: 10px;
@@ -50,6 +51,8 @@
             height: 100%;
             border: none;
             outline: none;
+            resize: none;
+            box-sizing: border-box;
         }
     }
 </style>

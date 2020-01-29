@@ -26,16 +26,22 @@
 3. MyBatis
 4. MySQL
 5. Redis
-6. RabbitMQ
+6. ActiveMQ/RabbitMQ
 7. Spring Cache
 8. WebSocket
 9. ...
 
 ## 项目效果图
 
+TODO
+
 ## 项目部署
 
+TODO
+
 ## 项目文档
+
+TODO
 
 ## 项目研发历程
 

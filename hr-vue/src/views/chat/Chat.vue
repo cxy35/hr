@@ -1,4 +1,5 @@
 <template>
+    <!-- 基于 https://github.com/is-liyiwei/vue-Chat-demo 改造 -->
     <div id="app">
         <div class="sidebar">
             <card></card>
@@ -40,7 +41,7 @@
         width: 800px;
         height: 600px;
         overflow: hidden;
-        border-radius: 10px;
+        border-radius: 5px;
 
         .sidebar, .main {
             height: 100%;
@@ -57,6 +58,8 @@
             position: relative;
             overflow: hidden;
             background-color: #eee;
+            border: solid 1px #DDD;
+            box-sizing: border-box;
         }
     }
 </style>

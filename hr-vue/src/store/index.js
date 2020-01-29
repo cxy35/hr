@@ -3,7 +3,10 @@ import Vuex from 'vuex'
 import {Notification} from 'element-ui';
 import {getRequest} from "../utils/api";
 import '../utils/stomp';
-import '../utils/sockjs';
+// import '../utils/sockjs';
+import SockJS from '../utils/sockjs';
+// import Stomp from 'stompjs'; // 需要先 npm install
+// import SockJS from 'sockjs-client'; // 需要先 npm install
 
 Vue.use(Vuex)
 

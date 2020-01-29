@@ -1,13 +1,15 @@
 # hr-vue
 
 ## npm install
-npm install vue
-npm i element-ui -S
-npm install axios
-npm install vuex
-npm install font-awesome
-npm install sass-loader --save-dev
-npm install node-sass --save-dev
+- npm install vue
+- npm i element-ui -S
+- npm install axios
+- npm install vuex
+- npm install font-awesome
+- npm install sass-loader --save-dev
+- npm install node-sass --save-dev
+- npm install sockjs-client
+- npm install stompjs
 
 ## Project setup
 ```
