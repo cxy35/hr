@@ -1,9 +1,9 @@
 <template>
     <div id="list">
         <ul style="padding-left: 0px">
-            <li v-for="item in hrs" :class="{ active: currentSession?item.username === currentSession.username:false}"
-                v-on:click="changeCurrentSession(item)">
-                <!--   :class="[item.id === currentSession ? 'active':'']" -->
+            <li v-for="item in users" :class="{ active: chatUser?item.username === chatUser.username:false}"
+                v-on:click="handleChatUser(item)">
+                <!--   :class="[item.id === chatUser ? 'active':'']" -->
                 <img class="avatar" :src="item.userface" :alt="item.name">
                 <el-badge :is-dot="isDot[user.username+'#'+item.username]"><p class="name">{{item.name}}</p></el-badge>
             </li>
@@ -22,13 +22,13 @@
             }
         },
         computed: mapState([
-            'hrs',
-            'isDot',
-            'currentSession'
+            'users',
+            'chatUser',
+            'isDot'
         ]),
         methods: {
-            changeCurrentSession(currentSession) {
-                this.$store.commit('changeCurrentSession', currentSession)
+            handleChatUser(chatUser) {
+                this.$store.commit('handleChatUser', chatUser)
             }
         }
     }

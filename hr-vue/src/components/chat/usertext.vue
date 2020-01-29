@@ -1,6 +1,6 @@
 <template>
     <div id="uesrtext">
-        <textarea placeholder="按 Ctrl + Enter 发送" v-model="content" v-on:keyup="addMessage"></textarea>
+        <textarea placeholder="按 Ctrl + Enter 发送" v-model="content" v-on:keyup.ctrl.enter="handleChatMessages"></textarea>
     </div>
 </template>
 
@@ -15,19 +15,19 @@
             }
         },
         computed: mapState([
-            'sessions',
-            'currentSession'
+            'chatUser',
+            'chatMessages'
         ]),
         methods: {
-            addMessage(e) {
-                // TODO 需要先判断是否选择了聊天对象
-                if (e.ctrlKey && e.keyCode === 13 && this.content.length) {
-                    let msgObj = new Object();
-                    msgObj.to = this.currentSession.username;
-                    msgObj.content = this.content;
-                    // console.log("send >>>>>> "+JSON.stringify(msgObj));
-                    this.$store.state.stomp.send('/ws/chat', {}, JSON.stringify(msgObj));
-                    this.$store.commit('addMessage', msgObj);
+            handleChatMessages() {
+                if (this.chatUser && this.content.length) {
+                    let msg = new Object();
+                    msg.self = true;
+                    msg.to = this.chatUser.username;
+                    msg.content = this.content;
+                    // console.log("send >>>>>> "+JSON.stringify(msg));
+                    this.$store.state.stomp.send('/ws/chat', {}, JSON.stringify(msg)); // 通过 WebSocket 发送消息
+                    this.$store.commit('handleChatMessages', msg); // 处理聊天消息
                     this.content = '';
                 }
             }

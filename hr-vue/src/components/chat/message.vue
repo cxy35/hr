@@ -1,12 +1,12 @@
 <template>
-    <div id="message" v-scroll-bottom="sessions">
-        <ul v-if="currentSession">
-            <li v-for="entry in sessions[user.username+'#'+currentSession.username]">
+    <div id="message" v-scroll-bottom="chatMessages">
+        <ul v-if="chatUser">
+            <li v-for="entry in chatMessages[user.username+'#'+chatUser.username]">
                 <p class="time">
                     <span>{{entry.date | time}}</span>
                 </p>
                 <div class="main" :class="{self:entry.self}">
-                    <img class="avatar" :src="entry.self ? user.userface : currentSession.userface" alt="">
+                    <img class="avatar" :src="entry.self ? user.userface : chatUser.userface" alt="">
                     <p class="text">{{entry.content}}</p>
                 </div>
             </li>
@@ -25,8 +25,8 @@
             }
         },
         computed: mapState([
-            'sessions',
-            'currentSession'
+            'chatUser',
+            'chatMessages'
         ]),
         filters: {
             time(date) {

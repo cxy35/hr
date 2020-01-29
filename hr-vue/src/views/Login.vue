@@ -50,7 +50,7 @@
                         this.postKeyValueRequest('/doLogin', this.loginForm).then(resp => {
                             this.loading = false;
                             if (resp) {
-                                this.$store.commit('INIT_CURRENTHR', resp.obj);
+                                this.$store.commit('initCurrentUser', resp.obj);
                                 window.sessionStorage.setItem("user", JSON.stringify(resp.obj));
                                 // 登录时如果有需要跳转的目标地址，则登录成功后直接到该地址，否则到 home 页
                                 let redirect = this.$route.query.redirect;
