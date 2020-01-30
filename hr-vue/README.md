@@ -1,6 +1,10 @@
 # hr-vue
 
-## npm install
+## Project setup
+```
+npm install
+
+## npm install details
 - npm install vue
 - npm i element-ui -S
 - npm install axios
@@ -10,10 +14,6 @@
 - npm install node-sass --save-dev
 - npm install sockjs-client
 - npm install stompjs
-
-## Project setup
-```
-npm install
 ```
 
 ### Compiles and hot-reloads for development

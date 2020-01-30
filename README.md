@@ -35,13 +35,19 @@
 
 TODO
 
+登录页
+
+内容页
+
 ## 项目部署
 
 TODO
 
 ## 项目文档
 
-TODO
+- [数据库初始化脚本](https://github.com/zhengjian511/hr/blob/master/hr.sql)
+- [需求规格说明书](https://github.com/zhengjian511/hr/blob/master/%E4%BA%BA%E4%BA%8B%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%9C%80%E6%B1%82%E8%A7%84%E6%A0%BC%E8%AF%B4%E6%98%8E%E4%B9%A6.pdf)
+- [设计说明书](https://github.com/lenve/vhr/wiki)
 
 ## 项目研发历程
 
