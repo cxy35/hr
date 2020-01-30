@@ -94,6 +94,7 @@
                 background-color: #fafafa;
                 border-radius: 4px;
                 line-height: 30px;
+                font-size: 14px;
             }
         }
 
@@ -115,6 +116,7 @@
                 background-color: #b2e281;
                 border-radius: 4px;
                 line-height: 30px;
+                font-size: 14px;
             }
         }
     }

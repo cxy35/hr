@@ -3,9 +3,9 @@ package com.zhengjian.hr.common.pojo;
 import java.util.Date;
 
 public class ChatMsg {
-    private String from;
-    private String fromNickname;
-    private String to;
+    private String from; // username
+    private String fromName; // name
+    private String to; // username
     private String content;
     private Date date;
 
@@ -17,12 +17,12 @@ public class ChatMsg {
         this.from = from;
     }
 
-    public String getFromNickname() {
-        return fromNickname;
+    public String getFromName() {
+        return fromName;
     }
 
-    public void setFromNickname(String fromNickname) {
-        this.fromNickname = fromNickname;
+    public void setFromName(String fromName) {
+        this.fromName = fromName;
     }
 
     public String getTo() {

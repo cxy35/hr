@@ -28,7 +28,7 @@
         ]),
         methods: {
             handleChatUser(chatUser) {
-                this.$store.commit('handleChatUser', chatUser)
+                this.$store.commit('handleChatUser', chatUser);
             }
         }
     }
@@ -37,7 +37,7 @@
 <style lang="scss" scoped>
     #list {
         li {
-            padding: 16px 15px;
+            padding: 10px 15px;
             border-bottom: 1px solid #292C33;
             cursor: pointer;
             list-style: none;
@@ -63,6 +63,7 @@
             margin-left: 15px;
             margin-top: 0px;
             margin-bottom: 0px;
+            font-size: 14px;
         }
     }
 </style>

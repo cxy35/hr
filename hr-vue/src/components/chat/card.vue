@@ -5,7 +5,8 @@
             <p class="name">{{user.name}}</p>
         </header>
         <footer>
-            <input class="search" type="text" v-model="$store.state.filterKey" placeholder="search user...">
+            <input class="search" type="text" placeholder="输入姓名搜索" v-model="$store.state.searchData.name"
+                   v-on:keydown.enter="handleSearch">
         </footer>
     </div>
 </template>
@@ -17,13 +18,18 @@
             return {
                 user: JSON.parse(window.sessionStorage.getItem("user"))
             }
+        },
+        methods: {
+            handleSearch() {
+                this.$store.commit('initUsers');
+            }
         }
     }
 </script>
 
 <style lang="scss" scoped>
     #card {
-        padding: 12px;
+        padding: 0px 10px;
 
         .avatar {
             width: 40px;
@@ -34,7 +40,6 @@
         .name {
             display: inline-block;
             padding: 10px;
-            margin-bottom: 15px;
             font-size: 16px;
         }
 
@@ -47,6 +52,8 @@
             border-radius: 4px;
             outline: none; /*鼠标点击后不会出现蓝色边框*/
             color: #FFF;
+            width: 100%;
+            box-sizing: border-box;
         }
     }
 </style>

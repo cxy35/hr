@@ -58,7 +58,7 @@
                             }
                         });
                     } else {
-                        this.$message.error('表单验证错误！');
+                        this.$message.error('表单验证错误');
                         return false;
                     }
                 });
