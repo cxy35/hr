@@ -11,6 +11,8 @@
     "core-js": "^3.4.3",
     "element-ui": "^2.13.0",
     "font-awesome": "^4.7.0",
+    "sockjs-client": "^1.4.0",
+    "stompjs": "^2.3.3",
     "vue": "^2.6.10",
     "vue-router": "^3.1.3",
     "vuex": "^3.1.2"

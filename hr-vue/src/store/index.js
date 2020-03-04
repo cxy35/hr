@@ -2,11 +2,12 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import {Notification} from 'element-ui';
 import {getRequest} from "../utils/api";
-import '../utils/stomp';
 // import '../utils/sockjs';
-import SockJS from '../utils/sockjs';
-// import Stomp from 'stompjs'; // 需要先 npm install
-// import SockJS from 'sockjs-client'; // 需要先 npm install
+// import '../utils/stomp';
+// import SockJS from '../utils/sockjs';
+// import Stomp from '../utils/stomp';
+import SockJS from 'sockjs-client'; // 需要先 npm install sockjs-client
+import Stomp from 'stompjs'; // 需要先 npm install stompjs
 
 Vue.use(Vuex);
 
