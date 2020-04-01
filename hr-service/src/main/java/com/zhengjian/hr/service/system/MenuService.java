@@ -36,7 +36,7 @@ public class MenuService {
      *
      * @return
      */
-    // @Cacheable
+    // @Cacheable // 菜单缓存
     public List<Menu> getListAllWithRoles() {
         return menuMapper.getListAllWithRoles();
     }
