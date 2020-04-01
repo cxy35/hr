@@ -58,6 +58,10 @@
 
 ![](https://oscimg.oschina.net/oscnet/up-9958c4977b05d2ef529413c0ebd5a9376ce.png)
 
+在线聊天
+
+![](https://oscimg.oschina.net/oscnet/up-73929a7a0a07d7fed372401fb08c989fd0e.png)
+
 ## 项目部署及二次开发
 
 1. clone 代码到本地的 `hr` 目录： `git clone https://github.com/cxy35/hr.git hr` 。
