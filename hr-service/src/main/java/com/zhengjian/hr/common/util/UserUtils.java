@@ -4,7 +4,7 @@ import com.zhengjian.hr.model.User;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
- * @Author zhengjian
+ * @Author cxy35
  * @Date 2020/1/8 15:08
  */
 public class UserUtils {

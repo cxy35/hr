@@ -3,7 +3,7 @@ package com.zhengjian.hr.model;
 import java.io.Serializable;
 
 /**
- * @Author zhengjian
+ * @Author cxy35
  * @Date 2019/12/26 11:36
  */
 public class Meta implements Serializable {
