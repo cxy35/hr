@@ -2,7 +2,7 @@
 
 ## 项目介绍
 
-人力资源管理系统，Spring Boot 项目实战，前后端分离开发，Spring Boot + Vue 。
+Spring Boot 实战项目（人力资源管理系统），前后端分离开发，Spring Boot + Vue 。
 
 - 项目地址：[https://github.com/cxy35/hr](https://github.com/cxy35/hr)
 
@@ -29,8 +29,9 @@
 6. ActiveMQ/RabbitMQ
 7. Spring Cache
 8. WebSocket
-9. 邮件服务
-10. ...
+9. POI
+10. 邮件服务
+11. ...
 
 ## 项目效果图
 
@@ -98,3 +99,17 @@
 - 薪资管理-员工账套管理
 - 在线聊天
 - 其他业务模块还未实现...
+
+
+---
+
+- [Spring Boot 教程合集](https://mp.weixin.qq.com/s/9vOiAxHFnfJnRwSlTfAHwg)
+- [Spring Boot 教程合集示例代码](https://github.com/cxy35/spring-boot-samples)
+- [Spring Boot 实战项目（人力资源管理系统）](https://github.com/cxy35/hr)
+
+
+---
+
+扫码关注微信公众号 **程序员35** ，获取最新技术干货，畅聊 #程序员的35，35的程序员# 。独立站点：[https://cxy35.com](https://cxy35.com)
+
+![](https://oscimg.oschina.net/oscnet/up-285838b9c516db5bb1ba760f292f2346078.JPEG)
