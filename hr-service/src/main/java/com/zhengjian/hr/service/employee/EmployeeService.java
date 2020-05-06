@@ -3,16 +3,21 @@ package com.zhengjian.hr.service.employee;
 import com.zhengjian.hr.common.pojo.RespPageBean;
 import com.zhengjian.hr.mapper.EmployeeMapper;
 import com.zhengjian.hr.model.Employee;
+import com.zhengjian.hr.model.MailConstants;
+import com.zhengjian.hr.model.MailSendLog;
+import com.zhengjian.hr.service.mail.MailSendLogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @Author cxy35
@@ -22,8 +27,12 @@ import java.util.List;
 public class EmployeeService {
     @Autowired
     EmployeeMapper employeeMapper;
+    //    @Autowired
+//    JmsMessagingTemplate jmsMessagingTemplate;
     @Autowired
-    JmsMessagingTemplate jmsMessagingTemplate;
+    RabbitTemplate rabbitTemplate; // RabbitMQConfig 中自定义过，增加了消息发送回调，提高消息发送可靠性
+    @Autowired
+    MailSendLogService mailSendLogService;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
@@ -36,7 +45,22 @@ public class EmployeeService {
         if (r == 1) {
             // 获取关联信息
             Employee employeeWithAll = employeeMapper.selectWithAllByPrimaryKey(employee.getId());
-            jmsMessagingTemplate.convertAndSend("employee.welcome", employeeWithAll);
+
+            // jmsMessagingTemplate.convertAndSend(MailConstants.QUEUE_NAME, employeeWithAll);
+
+            // 生成消息的唯一id
+            String msgId = UUID.randomUUID().toString();
+            MailSendLog mailSendLog = new MailSendLog();
+            mailSendLog.setMsgId(msgId);
+            Date date = new Date();
+            mailSendLog.setCreateTime(date);
+            mailSendLog.setUpdateTime(date);
+            mailSendLog.setExchange(MailConstants.EXCHANGE_NAME);
+            mailSendLog.setRouteKey(MailConstants.ROUTING_KEY_NAME);
+            mailSendLog.setEmpId(employeeWithAll.getId());
+            mailSendLog.setTryTime(new Date(System.currentTimeMillis() + 1000 * 60 * MailConstants.MSG_TIMEOUT));
+            mailSendLogService.insert(mailSendLog);
+            rabbitTemplate.convertAndSend(MailConstants.EXCHANGE_NAME, MailConstants.ROUTING_KEY_NAME, employeeWithAll, new CorrelationData(msgId));
         }
         return r;
     }

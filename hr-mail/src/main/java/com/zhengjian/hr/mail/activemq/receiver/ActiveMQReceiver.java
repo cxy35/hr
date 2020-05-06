@@ -2,6 +2,7 @@ package com.zhengjian.hr.mail.activemq.receiver;
 
 import com.zhengjian.hr.mail.activemq.config.ActiveMQConfig;
 import com.zhengjian.hr.model.Employee;
+import com.zhengjian.hr.model.MailConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class ActiveMQReceiver {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     // 监听队列
-    @JmsListener(destination = ActiveMQConfig.QUEUE_NAME)
+    // @JmsListener(destination = MailConstants.QUEUE_NAME)
     public void receive(Employee employee) {
         logger.info(employee.toString());
         // 收到消息，发送邮件

@@ -26,7 +26,7 @@ Spring Boot 实战项目（人力资源管理系统），前后端分离开发�
 3. MyBatis
 4. MySQL
 5. Redis
-6. ActiveMQ/RabbitMQ
+6. RabbitMQ
 7. Spring Cache
 8. WebSocket
 9. POI
@@ -65,15 +65,15 @@ Spring Boot 实战项目（人力资源管理系统），前后端分离开发�
 
 ## 项目部署及二次开发
 
-1. clone 代码到本地的 `hr` 目录： `git clone https://github.com/cxy35/hr.git hr` 。
+1. clone 代码到本地的 `hr` 目录： `git clone https://github.com/cxy35/hr.git` 。
 2. 在本地新建 `hr` 数据库，执行数据库初始化脚本 `hr/hr.sql` 。
 3. 用 IntelliJ IDEA 或其他 IDE 导入 `hr` 后端工程（选 hr 目录即可）。如果不是二次开发，则可跳过此步骤。
-4. 修改 `hr-web` 工程下的 `application.properties` 配置文件中的数据库、ActiveMQ/RabbitMQ、Redis 等配置，之后通过 IDE 启动 或 Maven 打包后启动后端服务，默认 `8081` 端口（见 `application.properties` 配置文件）。
-5. 修改 `hr-mail` 工程下的 `application.properties` 配置文件中的邮件服务、ActiveMQ/RabbitMQ 等配置，之后通过 IDE 启动 或 Maven 打包后启动邮件服务，默认 `8082` 端口（见 `application.properties` 配置文件）。如果不想发邮件，则可跳过此步骤。
+4. 修改 `hr-web` 工程下的 `application.properties` 配置文件中的数据库、RabbitMQ、Redis 等配置，之后通过 IDE 启动 或 Maven 打包后启动后端服务，默认 `8081` 端口（见 `application.properties` 配置文件）。
+5. 修改 `hr-mail` 工程下的 `application.properties` 配置文件中的邮件服务、RabbitMQ 等配置，之后通过 IDE 启动 或 Maven 打包后启动邮件服务，默认 `8082` 端口（见 `application.properties` 配置文件）。如果不想发邮件，则可跳过此步骤。
 6. 用 WebStorm 或其他 IDE 导入 `hr-vue` 前端工程（选 hr-vue 目录）。如果不是二次开发，则可跳过此步骤。
 7. 在 `hr-vue` 根目录下用 `npm install` 命令安装前端相关依赖（需要先安装 `node` 环境，自行百度），如：vue、element-ui、axios 等，具体见 `hr-vue/README.md` 。
 8. 在 `hr-vue` 根目录下用 `npm run serve` 命令启动前端服务，默认 `8080` 端口（见 `vue.config.js` 配置文件）。
-9. 访问 [http://127.0.0.1:8080](http://127.0.0.1:8080) ，使用 admin/123 登录。
+9. 访问 [http://127.0.0.1:8080](http://127.0.0.1:8080) ，使用 `admin/123` 登录。
 
 ## 项目研发历程
 

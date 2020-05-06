@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50545
 File Encoding         : 65001
 
-Date: 2020-04-01 16:56:56
+Date: 2020-05-05 17:23:12
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -287,7 +287,7 @@ CREATE TABLE `t_employee` (
   CONSTRAINT `fk_emp_politicsStatusId` FOREIGN KEY (`politicsStatusId`) REFERENCES `t_politicsstatus` (`id`),
   CONSTRAINT `fk_emp_positonId` FOREIGN KEY (`positionId`) REFERENCES `t_position` (`id`),
   CONSTRAINT `fk_emp_salaryId` FOREIGN KEY (`salaryId`) REFERENCES `t_salary` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1958 DEFAULT CHARSET=utf8 COMMENT='员工';
+) ENGINE=InnoDB AUTO_INCREMENT=1967 DEFAULT CHARSET=utf8 COMMENT='员工';
 
 -- ----------------------------
 -- Records of t_employee
@@ -398,6 +398,15 @@ INSERT INTO `t_employee` VALUES ('1954', '测试员工3', '男', '1989-12-31', '
 INSERT INTO `t_employee` VALUES ('1955', '测试员工', '男', '1989-12-31', '610122199001011256', '已婚', '1', '陕西', '13', '454407628@qq.com', '18565558897', '深圳市南山区', '91', '10', '36', null, '劳务合同', '本科', '信息管理与信息系统', '深圳大学', '2017-12-31', '在职', '00000069', '2', '2018-03-31', null, '2017-12-31', '2019-12-31', null);
 INSERT INTO `t_employee` VALUES ('1956', '测试员工', '男', '1989-12-31', '610122199001011256', '已婚', '1', '陕西', '13', '454407628@qq.com', '18565558897', '深圳市南山区', '78', '9', '29', null, '劳务合同', '本科', '信息管理与信息系统', '深圳大学', '2017-12-31', '在职', '00000070', '2', '2018-03-31', null, '2017-12-31', '2019-12-31', null);
 INSERT INTO `t_employee` VALUES ('1957', '测试员工', '男', '1989-12-31', '610122199001011256', '已婚', '1', '陕西', '13', '454407628@qq.com', '18565558897', '深圳市南山区', '89', '9', '29', null, '劳务合同', '本科', '信息管理与信息系统', '深圳大学', '2017-12-31', '在职', '00000071', '2', '2018-03-31', null, '2017-12-31', '2019-12-31', null);
+INSERT INTO `t_employee` VALUES ('1958', '测试员工', '男', '1989-12-31', '610122199001011256', '已婚', '1', '陕西', '13', 'laowang@qq.com', '18565558897', '深圳市南山区', '124', '9', '29', null, '劳务合同', '本科', '信息管理与信息系统', '深圳大学', '2017-12-31', '在职', '00000072', '2', '2018-03-31', null, '2017-12-31', '2019-12-31', null);
+INSERT INTO `t_employee` VALUES ('1959', '测试员工', '男', '1989-12-31', '610122199001011256', '已婚', '1', '陕西', '13', '799737179@qq.com', '13888888888', '深圳市南山区', '8', '9', '29', null, '劳务合同', '本科', '信息管理与信息系统', '深圳大学', '2017-12-31', '在职', '00000073', '2', '2018-03-31', null, '2017-12-31', '2019-12-31', null);
+INSERT INTO `t_employee` VALUES ('1960', '测试员工', '男', '1989-12-31', '610122199001011256', '已婚', '1', '陕西', '13', '799737179@qq.com', '13888888888', '深圳市南山区', '85', '9', '29', null, '劳务合同', '本科', '信息管理与信息系统', '深圳大学', '2017-12-31', '在职', '00000074', '2', '2018-03-31', null, '2017-12-31', '2019-12-31', null);
+INSERT INTO `t_employee` VALUES ('1961', '测试员工', '男', '1989-12-31', '610122199001011256', '已婚', '1', '陕西', '13', '799737179@qq.com', '13888888888', '深圳市南山区', '91', '9', '29', null, '劳务合同', '本科', '信息管理与信息系统', '深圳大学', '2017-12-31', '在职', '00000075', '2', '2018-03-31', null, '2017-12-31', '2019-12-31', null);
+INSERT INTO `t_employee` VALUES ('1962', '测试员工', '男', '1989-12-31', '610122199001011256', '已婚', '1', '陕西', '13', '799737179@qq.com', '13888888888', '深圳市南山区', '126', '9', '29', null, '劳务合同', '本科', '信息管理与信息系统', '深圳大学', '2017-12-31', '在职', '00000076', '2', '2018-03-31', null, '2017-12-31', '2019-12-31', null);
+INSERT INTO `t_employee` VALUES ('1963', '测试员工', '男', '1989-12-31', '610122199001011256', '已婚', '1', '陕西', '13', '799737179@qq.com', '13888888888', '深圳市南山区', '93', '9', '29', null, '劳务合同', '本科', '信息管理与信息系统', '深圳大学', '2017-12-31', '在职', '00000077', '2', '2018-03-31', null, '2017-12-31', '2019-12-31', null);
+INSERT INTO `t_employee` VALUES ('1964', '测试员工', '男', '1989-12-31', '610122199001011256', '已婚', '1', '陕西', '13', '799737179@qq.com', '13888888888', '深圳市南山区', '115', '9', '29', null, '劳务合同', '本科', '信息管理与信息系统', '深圳大学', '2017-12-31', '在职', '00000078', '2', '2018-03-31', null, '2017-12-31', '2019-12-31', null);
+INSERT INTO `t_employee` VALUES ('1965', '测试员工', '男', '1989-12-31', '610122199001011256', '已婚', '1', '陕西', '13', '799737179@qq.com', '13888888888', '深圳市南山区', '89', '9', '29', null, '劳务合同', '本科', '信息管理与信息系统', '深圳大学', '2017-12-31', '在职', '00000079', '2', '2018-03-31', null, '2017-12-31', '2019-12-31', null);
+INSERT INTO `t_employee` VALUES ('1966', '测试员工', '男', '1989-12-31', '610122199001011256', '已婚', '1', '陕西', '13', '799737179@qq.com', '13888888888', '深圳市南山区', '91', '9', '29', null, '劳务合同', '本科', '信息管理与信息系统', '深圳大学', '2017-12-31', '在职', '00000080', '2', '2018-03-31', null, '2017-12-31', '2019-12-31', null);
 
 -- ----------------------------
 -- Table structure for t_jobtitle
@@ -424,6 +433,33 @@ INSERT INTO `t_jobtitle` VALUES ('15', '中级工程师66', '中级', '2018-01-1
 INSERT INTO `t_jobtitle` VALUES ('16', '高级工程师', '副高级', '2018-01-14 16:19:14', '1');
 INSERT INTO `t_jobtitle` VALUES ('17', '骨灰级工程师', '正高级', '2018-01-14 16:19:24', '1');
 INSERT INTO `t_jobtitle` VALUES ('18', '测试职称1', '副高级', '2020-01-02 13:19:21', '0');
+
+-- ----------------------------
+-- Table structure for t_mail_send_log
+-- ----------------------------
+DROP TABLE IF EXISTS `t_mail_send_log`;
+CREATE TABLE `t_mail_send_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `msgId` varchar(255) DEFAULT NULL,
+  `empId` int(11) DEFAULT NULL,
+  `status` int(11) DEFAULT '0' COMMENT '0投递中 1投递成功 2投递失败',
+  `routeKey` varchar(255) DEFAULT NULL,
+  `exchange` varchar(255) DEFAULT NULL,
+  `count` int(11) DEFAULT '0' COMMENT '重试次数',
+  `tryTime` datetime DEFAULT NULL COMMENT '第一次重试时间',
+  `createTime` datetime DEFAULT NULL,
+  `updateTime` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of t_mail_send_log
+-- ----------------------------
+INSERT INTO `t_mail_send_log` VALUES ('1', '625dc524-f643-4816-81ae-ec72b1c5e979', '1961', '1', 'hr.mail.employee.welcome.routingKey', 'hr.mail.employee.welcome.exchange', '0', '2020-05-05 17:00:37', '2020-05-05 16:59:37', '2020-05-05 16:59:37');
+INSERT INTO `t_mail_send_log` VALUES ('2', '2d6632f8-4070-4cbe-afc8-c91399025fc6', '1963', '1', 'hr.mail.employee.welcome.routingKey', 'hr.mail.employee.welcome.exchange', '1', '2020-05-05 17:06:58', '2020-05-05 17:05:58', '2020-05-05 17:10:40');
+INSERT INTO `t_mail_send_log` VALUES ('3', '1bd38c7d-2795-467b-9f21-86f70df58370', '1964', '2', 'hr.mail.employee.welcome.routingKey', 'hr.mail.employee.welcome.exchange', '3', '2020-05-05 17:13:19', '2020-05-05 17:12:19', '2020-05-05 17:13:40');
+INSERT INTO `t_mail_send_log` VALUES ('4', '007ce125-3059-4017-9f27-b699fa307448', '1965', '2', 'hr.mail.employee.welcome.routingKey', 'hr.mail.employee.welcome.exchange', '3', '2020-05-05 17:19:36', '2020-05-05 17:18:36', '2020-05-05 17:20:00');
+INSERT INTO `t_mail_send_log` VALUES ('5', 'a12078d1-a30b-4897-92f1-df293fcd13ad', '1966', '1', 'hr.mail.employee.welcome.routingKey', 'hr.mail.employee.welcome.exchange', '0', '2020-05-05 17:21:53', '2020-05-05 17:20:53', '2020-05-05 17:20:53');
 
 -- ----------------------------
 -- Table structure for t_menu
